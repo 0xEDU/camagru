@@ -31,11 +31,12 @@ class DragDropView {
 		this.dropArea.addEventListener('drop', handler);
 	}
 
-	moveElementToDropArea(element, x, y, dropArea) {
+	moveElementToDropArea(element, x, y) {
 		element.style.left = `${x}px`;
 		element.style.top = `${y}px`;
 		element.style.position = 'absolute';
 		this.dropArea.appendChild(element);
+		console.log('dropped element at: ', x, y);
 	}
 
 	removeElementFromCarousel(element) {

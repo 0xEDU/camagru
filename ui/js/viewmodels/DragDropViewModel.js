@@ -6,15 +6,12 @@ class DragDropViewModel {
 		this.dragDropModel = new DragDropModel();
 		this.dragDropView = new DragDropView();
 
-		this.draggedElementId = null;
-
 		this.dragDropView.bindDragOver(this.handleDragOver.bind(this));
 		this.dragDropView.bindDrop(this.handleDrop.bind(this));
 	}
 
 	handleDragStart(event) {
-		this.draggedElementId = event.target.id;
-		event.dataTransfer.setData('text/plain', this.draggedElementId);
+		event.dataTransfer.setData('text/plain', event.target.id);
 	}
 
 	handleDragOver(event) {
@@ -23,15 +20,18 @@ class DragDropViewModel {
 
 	handleDrop(event) {
 		event.preventDefault();
-
-		const draggedElement = document.getElementById(this.draggedElementId);
-
-		const x = event.clientX - event.target.offsetLeft - (draggedElement.offsetWidth / 2);
-		const y = event.clientY - event.target.offsetTop - (draggedElement.offsetHeight / 2);
-
-		this.dragDropView.moveElementToDropArea(draggedElement, x, y, event.target);
+	
+		const id = event.dataTransfer.getData('text/plain');
+		const draggedElement = document.getElementById(id);
+	
+		const x = event.clientX - this.dragDropView.dropArea.offsetLeft - (draggedElement.offsetWidth / 2);
+		const y = event.clientY - this.dragDropView.dropArea.offsetTop - (draggedElement.offsetHeight / 2);
+	
+		this.dragDropView.moveElementToDropArea(draggedElement, x, y);
 		this.dragDropView.removeElementFromCarousel(draggedElement);
 	}
+	
+
 
 	addImage(src) {
 		const image = this.dragDropModel.addImage(src);
