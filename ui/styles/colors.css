@@ -1,0 +1,23 @@
+.bg-color-primary {
+	background-color: #E0DFF7;
+}
+
+.bg-color-secondary {
+	background-color: #FFEBCC;
+}
+
+.bg-color-tertiary {
+	background-color: #fff4c2;
+}
+
+.bg-color-quaternary {
+	background-color: #FFC9DC;
+}
+
+.border-color-primary {
+	border-color: #ffe596;
+}
+
+.text-color-primary {
+	color: #b6ae8a;
+}
