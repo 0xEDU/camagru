@@ -1,5 +1,5 @@
-import CameraModel from '../data/models/CameraModel.js';
-import CameraView from '../../views/CameraView.js';
+import CameraModel from '../../data/models/CameraModel.js';
+import CameraView from '../views/CameraView.js';
 
 class CameraViewModel {
     constructor() {
