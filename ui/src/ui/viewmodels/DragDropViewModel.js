@@ -1,4 +1,4 @@
-import DragDropModel from '../models/DragDropModel.js';
+import DragDropModel from '../../data/models/DragDropModel.js';
 import DragDropView from '../views/DragDropView.js';
 
 class DragDropViewModel {
