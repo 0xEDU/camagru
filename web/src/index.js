@@ -47,8 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	cameraViewModel.initialize();
 
 	const dragDropViewModel = new DragDropViewModel();
-	dragDropViewModel.addImage('../assets/orange-cat.png');
-	dragDropViewModel.addImage('../assets/orange-cat2.png');
+	dragDropViewModel.addImage('./assets/orange-cat.png');
+	dragDropViewModel.addImage('./assets/orange-cat2.png');
 	// dragDropViewModel.addImage('./assets/another-cat.png');
 
 	// Load images to the view (if any exist in the model)
