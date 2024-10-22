@@ -41,17 +41,23 @@
 // });
 import CameraViewModel from './ui/viewmodels/CameraViewModel.js';
 import DragDropViewModel from './ui/viewmodels/DragDropViewModel.js';
+import HomeViewModel from './ui/viewmodels/HomeViewModel.js';
 import HttpClient from './network/HttpClient.js';
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
 	const baseUrl = 'http://localhost:8042';
 	const httpClient = new HttpClient(baseUrl);
+
+	const homeViewModel = new HomeViewModel(httpClient);
+	await homeViewModel.initialize();
+
 	const cameraViewModel = new CameraViewModel(httpClient);
-	cameraViewModel.initialize();
+	await cameraViewModel.initialize();
 
 	const dragDropViewModel = new DragDropViewModel();
 	dragDropViewModel.addImage('./assets/orange-cat.png');
 	dragDropViewModel.addImage('./assets/orange-cat2.png');
+	dragDropViewModel.addImage('./assets/curious-cat.jpg');
 	// dragDropViewModel.addImage('./assets/another-cat.png');
 
 	// Load images to the view (if any exist in the model)

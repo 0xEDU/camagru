@@ -1,5 +1,11 @@
 <?php
-require_once 'controllers/ImageController.php';
+spl_autoload_register(function ($class) {
+    if (file_exists(__DIR__ . '/./controllers/' . $class . '.php')) {
+        require __DIR__ . '/./controllers/' . $class . '.php';
+    } elseif (file_exists(__DIR__ . '/./core/' . $class . '.php')) {
+        require __DIR__ . '/./core/' . $class . '.php';
+    }
+});
 
 // Enable CORS
 header("Access-Control-Allow-Origin: *");
@@ -9,13 +15,5 @@ header("Access-Control-Allow-Headers: Content-Type");
 // log the request
 error_log("Request received: " . $_SERVER['REQUEST_URI']);
 
-$imageController = new ImageController();
-
-$requestUri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-if ($requestUri === '/images') {
-	$imageController->handleRequest();
-} else {
-	header("HTTP/1.1 404 Not Found");
-	echo json_encode(array("error" => "Not found"));
-}
-?>
+$router = new Router();
+$router->route();
