@@ -2,7 +2,8 @@ import CameraModel from '../../data/models/CameraModel.js';
 import CameraView from '../views/CameraView.js';
 
 class CameraViewModel {
-    constructor() {
+    constructor(httpClient) {
+        this.httpClient = httpClient;
         this.cameraModel = new CameraModel();
         this.cameraView = new CameraView();
 
@@ -14,16 +15,21 @@ class CameraViewModel {
         this.cameraView.bindStream(stream);
     }
 
-    handleCapture() {
+    async handleCapture() {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
         canvas.width = this.cameraView.videoElement.clientWidth;
         canvas.height = this.cameraView.videoElement.clientHeight;
         context.drawImage(this.cameraView.videoElement, 0, 0, canvas.width, canvas.height);
+
         const image = canvas.toDataURL('image/png');
 
         this.cameraView.videoElement.style.display = 'none';
         this.cameraView.imageArea.innerHTML += `<img src="${image}" alt="Captured Image" />`;
+
+        const body = { "image": image };
+        console.log(body);
+        await this.httpClient.post('/images', body);
         // this.cameraModel.saveImage(image); later
     }
 }

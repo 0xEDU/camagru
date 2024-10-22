@@ -41,9 +41,12 @@
 // });
 import CameraViewModel from './ui/viewmodels/CameraViewModel.js';
 import DragDropViewModel from './ui/viewmodels/DragDropViewModel.js';
+import HttpClient from './network/HttpClient.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-	const cameraViewModel = new CameraViewModel();
+	const baseUrl = 'http://localhost:8042';
+	const httpClient = new HttpClient(baseUrl);
+	const cameraViewModel = new CameraViewModel(httpClient);
 	cameraViewModel.initialize();
 
 	const dragDropViewModel = new DragDropViewModel();
