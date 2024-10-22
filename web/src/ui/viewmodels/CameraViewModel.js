@@ -30,7 +30,6 @@ class CameraViewModel {
         const body = { "image": image };
         console.log(body);
         await this.httpClient.post('/images', body);
-        // this.cameraModel.saveImage(image); later
     }
 }
 
