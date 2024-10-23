@@ -24,11 +24,9 @@ class CameraViewModel {
 
         const image = canvas.toDataURL('image/png');
 
-        this.cameraView.videoElement.style.display = 'none';
-        this.cameraView.imageArea.innerHTML += `<img src="${image}" alt="Captured Image" />`;
+        this.cameraView.onPictureCaptured(image);
 
         const body = { "image": image };
-        console.log(body);
         await this.httpClient.post('/images', body);
     }
 }

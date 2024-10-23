@@ -9,7 +9,7 @@
 	</div>
 </section>
 <aside class="bg-color-primary text-color-primary flex-shrink-0 w-1/3">
-	<section class="h-full w-full p-6">
+	<section id="last-taken-pics-gallery" class="h-full w-full p-6">
 		<div class="w-full flex">
 			<img id="gallery-image" class="w-full h-[18vh] p-2 object-scale-down" src="./assets/orange-cat.png" alt="">
 			<img id="gallery-image" class="w-full h-[18vh] p-2 object-scale-down" src="./assets/orange-cat.png" alt="">
