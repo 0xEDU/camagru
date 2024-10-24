@@ -1,7 +1,7 @@
 class HttpClient {
-    constructor(baseUrl) {
-        this.baseUrl = baseUrl;
-    }
+	constructor(baseUrl) {
+		this.baseUrl = baseUrl;
+	}
 
 	async get(endpoint) {
 		try {
@@ -17,7 +17,13 @@ class HttpClient {
 	async post(endpoint, data) {
 		try {
 			const url = `${this.baseUrl}${endpoint}`;
-			const response = await fetch(url, { method: 'POST', body: JSON.stringify(data) });
+			const response = await fetch(url, {
+				method: 'POST',
+				body: JSON.stringify(data),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 			const checkedResponse = await this._checkStatus(response);
 			return checkedResponse.json();
 		} catch (error) {
