@@ -2,18 +2,24 @@
 
 class ImagesController
 {
-	public function handleRequest()
+	public function handleGetByIdRequest($id)
 	{
-		switch($_SERVER['REQUEST_METHOD']) {
-			case 'POST':
-				$this->handlePostRequest();
-				break;
-			default:
-				http_response_code(405);
+		$imagePath = 'imgs/' . $id . '.png';
+		if (file_exists($imagePath)) {
+			header('Content-Type: image/png');
+			readfile($imagePath);
+		} else {
+			http_response_code(404);
+			echo json_encode(['error' => 'Image not found']);
 		}
 	}
 
-	private function handlePostRequest()
+	public function handleGetRequest()
+	{
+		
+	}
+
+	public function handlePostRequest()
 	{
 		$rawData = file_get_contents('php://input');
 		$data = json_decode($rawData, true);
@@ -27,6 +33,9 @@ class ImagesController
 		file_put_contents('imgs/' . $id . '.png', $image);
 	
 		header('Content-Type: application/json');
-		echo json_encode(['id' => $id]);
+		echo json_encode([
+			'id' => $id,
+			'path' => 'api/imgs/' . $id
+		]);
 	}
 }
