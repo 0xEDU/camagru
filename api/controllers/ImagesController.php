@@ -4,8 +4,12 @@ class ImagesController
 {
 	public function handleRequest()
 	{
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			$this->handlePostRequest();
+		switch($_SERVER['REQUEST_METHOD']) {
+			case 'POST':
+				$this->handlePostRequest();
+				break;
+			default:
+				http_response_code(405);
 		}
 	}
 
@@ -14,8 +18,15 @@ class ImagesController
 		$rawData = file_get_contents('php://input');
 		$data = json_decode($rawData, true);
 
-		error_log("Received image: " . $data['image']);
+		$image = $data['image'];
+		list($type, $image) = explode(';', $image);
+		list(, $image) = explode(',', $image);
+		$image = base64_decode($image);
 
-		// TODO: Convert to png and save the image to the database
+		$id = uniqid();
+		file_put_contents('imgs/' . $id . '.png', $image);
+	
+		header('Content-Type: application/json');
+		echo json_encode(['id' => $id]);
 	}
 }
