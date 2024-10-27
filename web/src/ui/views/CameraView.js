@@ -53,13 +53,10 @@ class CameraView {
                 const img = new Image();
                 img.src = imageElement.src;
                 img.onload = () => {
-                    const x = imageElement.offsetLeft - (8 * this.imageArea.offsetLeft); // I have no clue why I need to multiply by 8
-                    const y = imageElement.offsetTop;
-
                     context.drawImage(
                         img,
-                        x,
-                        y,
+                        imageElement.offsetLeft - (8 * this.imageArea.offsetLeft), // I have no clue why I need to multiply by 8
+                        imageElement.offsetTop,
                         imageElement.clientWidth,
                         imageElement.clientHeight
                     );
