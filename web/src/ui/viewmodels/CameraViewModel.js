@@ -8,6 +8,7 @@ class CameraViewModel {
         this.cameraView = new CameraView();
 
         this.cameraView.bindCapture(this.handleCapture.bind(this));
+        this.cameraView.bindRetry(this.handleRetry.bind(this));
     }
 
     async initialize() {
@@ -16,18 +17,17 @@ class CameraViewModel {
     }
 
     async handleCapture() {
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.width = this.cameraView.videoElement.clientWidth;
-        canvas.height = this.cameraView.videoElement.clientHeight;
-        context.drawImage(this.cameraView.videoElement, 0, 0, canvas.width, canvas.height);
+        const encodedImage = await this.cameraView.encodeCapturedImage();
 
-        const image = canvas.toDataURL('image/png');
+        const body = { "image": encodedImage };
+        const response = await this.httpClient.post('/images', body);
+        const id = response.data.id;
 
-        this.cameraView.onPictureCaptured(image);
+        this.cameraView.updateLastTakenPicsGallery(id, encodedImage);
+    }
 
-        const body = { "image": image };
-        await this.httpClient.post('/images', body);
+    handleRetry() {
+        this.cameraView.displayCamera();
     }
 }
 
