@@ -7,6 +7,7 @@ class CameraView {
         this.cameraButtonSnap = document.getElementById('camera-button-snap');
         this.cameraButtonRetry = document.getElementById('camera-button-retry');
         this.cameraButtonSave = document.getElementById('camera-button-save');
+        this.cameraButtonRefresh = document.getElementById('camera-button-refresh');
         this.imageArea = document.getElementById('drop-area');
         this.lastTakenPicsGallery = document.getElementById('last-taken-pics-gallery')
 
@@ -23,6 +24,10 @@ class CameraView {
 
     bindRetry(handler) {
         this.cameraButtonRetry.addEventListener('click', handler);
+    }
+
+    bindRefresh(handler) {
+        this.cameraButtonRefresh.addEventListener('click', handler);
     }
 
     bindSave(handler) {
@@ -78,6 +83,20 @@ class CameraView {
             const newImage = this._createElementFromHTML(imageHtml);
             placeholder.replaceWith(newImage);
         }
+    }
+
+    refreshDraggableImages() {
+        const draggableImages = this._getDraggableImages();
+        if (draggableImages.length === 0) return;
+        draggableImages.forEach((image) => {
+            image.style.left = '';
+            image.style.top = '';
+            image.style.position = '';
+
+            const carousel = document.getElementById('image-carousel');
+            carousel.appendChild(image);
+            this.imageArea.removeChild(image);
+        });
     }
 
     _getNewCanvasFromElement(element) {

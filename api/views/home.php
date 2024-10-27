@@ -9,6 +9,8 @@
 			</button>
 			<button id="camera-button-retry" class="w-16 h-16 mb-2 rounded-full bg-red-500">
 			</button>
+			<button id="camera-button-refresh" class="w-16 h-16 mb-2 rounded-full bg-orange-500">
+			</button>
 		</div>
 	</div>
 </section>

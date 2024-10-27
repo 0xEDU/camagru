@@ -10,6 +10,7 @@ class CameraViewModel {
         this.cameraView.bindCapture(this.handleCapture.bind(this));
         this.cameraView.bindSave(this.handleSave.bind(this));
         this.cameraView.bindRetry(this.handleRetry.bind(this));
+        this.cameraView.bindRefresh(this.handleRefresh.bind(this));
     }
 
     async initialize() {
@@ -33,6 +34,10 @@ class CameraViewModel {
 
     handleRetry() {
         this.cameraView.displayCamera();
+    }
+
+    handleRefresh() {
+        this.cameraView.refreshDraggableImages();
     }
 }
 
