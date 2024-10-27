@@ -30,8 +30,6 @@ class DragDropViewModel {
 		this.dragDropView.moveElementToDropArea(draggedElement, x, y);
 		this.dragDropView.removeElementFromCarousel(draggedElement);
 	}
-	
-
 
 	addImage(src) {
 		const image = this.dragDropModel.addImage(src);
