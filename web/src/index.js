@@ -56,9 +56,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	const dragDropViewModel = new DragDropViewModel();
 	dragDropViewModel.addImage('./assets/orange-cat.png');
-	dragDropViewModel.addImage('./assets/orange-cat2.png');
-	dragDropViewModel.addImage('./assets/curious-cat.jpg');
-	// dragDropViewModel.addImage('./assets/another-cat.png');
+	dragDropViewModel.addImage('./assets/kawaii.png');
+	dragDropViewModel.addImage('./assets/devil-horns.png');
+	dragDropViewModel.addImage('./assets/anime-girl.png');
 
 	// Load images to the view (if any exist in the model)
 	dragDropViewModel.loadImages();
