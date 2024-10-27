@@ -10,7 +10,8 @@ class DragDropView {
 		imgElement.src = image.src;
 		imgElement.alt = 'Draggable Image';
 		imgElement.draggable = true;
-		imgElement.className = 'cursor-move z-10 w-32 h-32';
+		imgElement.className = 'cursor-move z-10 object-contain';
+		imgElement.style.width = '20%';
 
 		// Bind the dragstart event to the new image
 		imgElement.addEventListener('dragstart', onDragStart);
