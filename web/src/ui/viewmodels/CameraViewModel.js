@@ -8,6 +8,7 @@ class CameraViewModel {
         this.cameraView = new CameraView();
 
         this.cameraView.bindCapture(this.handleCapture.bind(this));
+        this.cameraView.bindSave(this.handleSave.bind(this));
         this.cameraView.bindRetry(this.handleRetry.bind(this));
     }
 
@@ -16,7 +17,7 @@ class CameraViewModel {
         this.cameraView.bindStream(stream);
     }
 
-    async handleCapture() {
+    async handleSave() {
         const encodedImage = await this.cameraView.encodeCapturedImage();
 
         const body = { "image": encodedImage };
@@ -24,6 +25,10 @@ class CameraViewModel {
         const id = response.data.id;
 
         this.cameraView.updateLastTakenPicsGallery(id, encodedImage);
+    }
+
+    handleCapture() {
+        this.cameraView.snapPicture();
     }
 
     handleRetry() {

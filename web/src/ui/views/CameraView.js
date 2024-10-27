@@ -6,6 +6,7 @@ class CameraView {
         this.videoElement = document.getElementById('user-camera');
         this.cameraButtonSnap = document.getElementById('camera-button-snap');
         this.cameraButtonRetry = document.getElementById('camera-button-retry');
+        this.cameraButtonSave = document.getElementById('camera-button-save');
         this.imageArea = document.getElementById('drop-area');
         this.lastTakenPicsGallery = document.getElementById('last-taken-pics-gallery')
 
@@ -24,13 +25,27 @@ class CameraView {
         this.cameraButtonRetry.addEventListener('click', handler);
     }
 
+    bindSave(handler) {
+        this.cameraButtonSave.addEventListener('click', handler);
+    }
+
     displayCamera() {
         this.videoElement.style.display = '';
         deleteElement('captured-image');
     }
 
+    snapPicture() {
+        const canvas = this._getNewCanvasFromElement(this.videoElement);
+        const encodedImage = canvas.toDataURL('image/png');
+        this.videoElement.style.display = 'none';
+
+        const capturedImage = `<img id="captured-image" class="w-9/12 rounded-xl shadow" src="${encodedImage}" alt="Catpured Image" />`;
+        insertElement(this.imageArea.id, capturedImage);
+    }
+
     async encodeCapturedImage() {
-        const canvas = this._getNewCameraCanvas();
+        const capturedImage = document.getElementById('captured-image');
+        const canvas = this._getNewCanvasFromElement(capturedImage);
         const draggableImages = this._getDraggableImages(this.imageArea);
         const context = canvas.getContext('2d');
         const drawImagesPromises = draggableImages.map((imageElement) => {
@@ -38,8 +53,8 @@ class CameraView {
                 const img = new Image();
                 img.src = imageElement.src;
                 img.onload = () => {
-                    const x = imageElement.offsetLeft - this.videoElement.offsetLeft;
-                    const y = imageElement.offsetTop - this.videoElement.offsetTop;
+                    const x = imageElement.offsetLeft - (8 * this.imageArea.offsetLeft); // I have no clue why I need to multiply by 8
+                    const y = imageElement.offsetTop;
 
                     context.drawImage(
                         img,
@@ -53,14 +68,7 @@ class CameraView {
             });
         });
 
-        return Promise.all(drawImagesPromises).then(() => {
-            const encodedImage = canvas.toDataURL('image/png');
-            this.videoElement.style.display = 'none';
-
-            const capturedImage = `<img id="captured-image" class="w-9/12 rounded-xl shadow" src="${encodedImage}" alt="Catpured Image" />`;
-            insertElement(this.imageArea.id, capturedImage);
-            return encodedImage;
-        })
+        return Promise.all(drawImagesPromises).then(() => canvas.toDataURL('image/png'));
     }
 
     updateLastTakenPicsGallery(id, encodedImage) {
@@ -75,12 +83,12 @@ class CameraView {
         }
     }
 
-    _getNewCameraCanvas() {
+    _getNewCanvasFromElement(element) {
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        canvas.width = this.videoElement.clientWidth;
-        canvas.height = this.videoElement.clientHeight;
-        context.drawImage(this.videoElement, 0, 0, canvas.width, canvas.height);
+        canvas.width = element.clientWidth;
+        canvas.height = element.clientHeight;
+        context.drawImage(element, 0, 0, canvas.width, canvas.height);
         return canvas;
     }
 
