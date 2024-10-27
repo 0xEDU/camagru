@@ -14,10 +14,6 @@ class ImagesController
 		}
 	}
 
-	public function handleGetRequest()
-	{
-		
-	}
 
 	public function handlePostRequest()
 	{
@@ -31,11 +27,12 @@ class ImagesController
 
 		$id = uniqid();
 		file_put_contents('imgs/' . $id . '.png', $image);
-	
+
 		header('Content-Type: application/json');
 		echo json_encode([
-			'id' => $id,
-			'path' => 'api/imgs/' . $id
+			'data' => [
+				'id' => $id
+			]
 		]);
 	}
 }
