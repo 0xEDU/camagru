@@ -1,6 +1,14 @@
+import HttpClient from '../../network/HttpClient.js';
+
 class DragDropModel {
-    constructor() {
+    constructor(httpClient) {
+        this.httpClient = httpClient;
         this.images = []; // Stores image objects { id, src }
+    }
+
+    async fetchSuperposables() {
+        const response = await this.httpClient.get('/superposables');
+        this.images = response.data;
     }
 
     addImage(src) {

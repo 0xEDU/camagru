@@ -54,12 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const cameraViewModel = new CameraViewModel(httpClient);
 	await cameraViewModel.initialize();
 
-	const dragDropViewModel = new DragDropViewModel();
-	dragDropViewModel.addImage('./assets/orange-cat.png');
-	dragDropViewModel.addImage('./assets/kawaii.png');
-	dragDropViewModel.addImage('./assets/devil-horns.png');
-	dragDropViewModel.addImage('./assets/anime-girl.png');
-
-	// Load images to the view (if any exist in the model)
+	const dragDropViewModel = new DragDropViewModel(httpClient);
+	await dragDropViewModel.fetchSuperposables();
 	dragDropViewModel.loadImages();
 });

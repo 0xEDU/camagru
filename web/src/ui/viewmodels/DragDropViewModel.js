@@ -2,8 +2,8 @@ import DragDropModel from '../../data/models/DragDropModel.js';
 import DragDropView from '../views/DragDropView.js';
 
 class DragDropViewModel {
-	constructor() {
-		this.dragDropModel = new DragDropModel();
+	constructor(httpClient) {
+		this.dragDropModel = new DragDropModel(httpClient);
 		this.dragDropView = new DragDropView();
 
 		this.dragDropView.bindDragOver(this.handleDragOver.bind(this));
@@ -31,9 +31,8 @@ class DragDropViewModel {
 		this.dragDropView.removeElementFromCarousel(draggedElement);
 	}
 
-	addImage(src) {
-		const image = this.dragDropModel.addImage(src);
-		this.dragDropView.renderImage(image, this.handleDragStart.bind(this));
+	async fetchSuperposables() {
+		await this.dragDropModel.fetchSuperposables();
 	}
 
 	loadImages() {
