@@ -37,7 +37,6 @@ class DragDropView {
 		element.style.top = `${y}px`;
 		element.style.position = 'absolute';
 		this.dropArea.appendChild(element);
-		console.log('dropped element at: ', x, y);
 	}
 
 	removeElementFromCarousel(element) {
