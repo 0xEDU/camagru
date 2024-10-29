@@ -40,7 +40,13 @@ class ImagesController
 		$superposables = array_diff(scandir('imgs/superposables'), array('..', '.'));
 		$superposables = array_map(function ($superposable) {
 			$superposable = file_get_contents('imgs/superposables/' . $superposable);
-			return base64_encode($superposable);
+			return 'data:image/png;base64,' . base64_encode($superposable);
+		}, $superposables);
+		$superposables = array_map(function ($superposable) {
+			return [
+				'id' => uniqid(),
+				'src' => $superposable
+			];
 		}, $superposables);
 		$superposables = array_values($superposables);
 
