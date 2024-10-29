@@ -42,6 +42,7 @@ class ImagesController
 			$superposable = file_get_contents('imgs/superposables/' . $superposable);
 			return base64_encode($superposable);
 		}, $superposables);
+		$superposables = array_values($superposables);
 
 		header('Content-Type: application/json');
 		echo json_encode([
