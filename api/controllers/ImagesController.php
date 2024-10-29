@@ -44,7 +44,7 @@ class ImagesController
 		}, $superposables);
 		$superposables = array_map(function ($superposable) {
 			return [
-				'id' => uniqid(),
+				'id' => 'draggable-image-' . uniqid(),
 				'src' => $superposable
 			];
 		}, $superposables);
