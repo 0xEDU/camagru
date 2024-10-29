@@ -26,13 +26,26 @@ class ImagesController
 		$image = base64_decode($image);
 
 		$id = uniqid();
-		file_put_contents('imgs/' . $id . '.png', $image);
+		file_put_contents('imgs/captures/' . $id . '.png', $image);
 
 		header('Content-Type: application/json');
 		echo json_encode([
 			'data' => [
 				'id' => $id
 			]
+		]);
+	}
+
+	public function handleGetSuperposablesRequest() {
+		$superposables = array_diff(scandir('imgs/superposables'), array('..', '.'));
+		$superposables = array_map(function ($superposable) {
+			$superposable = file_get_contents('imgs/superposables/' . $superposable);
+			return base64_encode($superposable);
+		}, $superposables);
+
+		header('Content-Type: application/json');
+		echo json_encode([
+			'data' => $superposables
 		]);
 	}
 }

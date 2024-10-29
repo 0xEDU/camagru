@@ -8,6 +8,7 @@ class Router
 			'#^/$#' => ['controller' => 'HomeController', 'method' => 'handleRequest'],
 			'#^/images/(\w+)$#' => ['controller' => 'ImagesController', 'method' => 'handleGetByIdRequest'],
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handleGetRequest'],
+			'#^/superposables$#' => ['controller' => 'ImagesController', 'method' => 'handleGetSuperposablesRequest'],
 		],
 		'POST' => [
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
