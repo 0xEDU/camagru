@@ -1,0 +1,30 @@
+version: '3'
+services:
+  api:
+    image: api
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: camagru-api
+    networks:
+      - camagru
+    restart: always
+
+  web:
+    image: web
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: camagru-web
+    ports:
+      - "8080:80"
+    depends_on:
+      - api
+    restart: always
+    networks:
+      - camagru
+
+networks:
+  camagru:
+    driver: bridge
+    name: camagru
