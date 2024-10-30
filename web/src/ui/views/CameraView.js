@@ -34,12 +34,26 @@ class CameraView {
         this.cameraButtonSave.addEventListener('click', handler);
     }
 
+    displayCameraButtons() {
+        this.cameraButtonSnap.style.display = '';
+        this.cameraButtonRetry.style.display = 'none';
+        this.cameraButtonSave.style.display = 'none';
+    }
+
+    displayCaptureButtons() {
+        this.cameraButtonSnap.style.display = 'none';
+        this.cameraButtonRetry.style.display = '';
+        this.cameraButtonSave.style.display = '';
+    }
+
     displayCamera() {
+        this.displayCameraButtons();
         this.videoElement.style.display = '';
         deleteElement('captured-image');
     }
 
     snapPicture() {
+        this.displayCaptureButtons();
         const canvas = this._getNewCanvasFromElement(this.videoElement);
         const encodedImage = canvas.toDataURL('image/png');
         this.videoElement.style.display = 'none';
