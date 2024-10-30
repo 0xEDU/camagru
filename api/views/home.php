@@ -5,9 +5,9 @@
 		<div class="absolute inset-0 flex items-end justify-center">
 			<button id="camera-button-snap" class="w-16 h-16 mb-2 rounded-full bg-green-500">
 			</button>
-			<button id="camera-button-save" class="w-16 h-16 mb-2 rounded-full bg-color-tertiary">
+			<button id="camera-button-save" class="w-16 h-16 mb-2 rounded-full bg-color-tertiary" style="display: none;">
 			</button>
-			<button id="camera-button-retry" class="w-16 h-16 mb-2 rounded-full bg-red-500">
+			<button id="camera-button-retry" class="w-16 h-16 mb-2 rounded-full bg-red-500" style="display: none;">
 			</button>
 			<button id="camera-button-refresh" class="w-16 h-16 mb-2 rounded-full bg-orange-500">
 			</button>
