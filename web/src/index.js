@@ -4,7 +4,7 @@ import HomeViewModel from './ui/viewmodels/HomeViewModel.js';
 import HttpClient from './network/HttpClient.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
-	const baseUrl = 'http://camagru-api:8042/api';
+	const baseUrl = 'http://localhost:8080/api';
 	const httpClient = new HttpClient(baseUrl);
 
 	const homeViewModel = new HomeViewModel(httpClient);
