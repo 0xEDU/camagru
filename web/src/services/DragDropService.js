@@ -1,5 +1,3 @@
-import DragDropComponent from '../components/DragDropComponent.js';
-
 class DragDropService {
 	constructor(httpClient) {
 		this.httpClient = httpClient;
