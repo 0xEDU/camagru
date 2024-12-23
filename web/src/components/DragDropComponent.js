@@ -1,4 +1,4 @@
-class DragDropView {
+class DragDropComponent {
 	constructor() {
 		this.imageCarousel = document.getElementById('image-carousel');
 		this.dropArea = document.getElementById('drop-area');
@@ -46,4 +46,4 @@ class DragDropView {
 	}
 }
 
-export default DragDropView;
+export default DragDropComponent;

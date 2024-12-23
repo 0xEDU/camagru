@@ -1,7 +1,7 @@
-import insertElement from '../../libs/tinyDOM/insertElement.js'
-import deleteElement from '../../libs/tinyDOM/deleteElement.js'
+import insertElement from '../libs/tinyDOM/insertElement.js'
+import deleteElement from '../libs/tinyDOM/deleteElement.js'
 
-class CameraView {
+class CameraComponent {
     constructor() {
         this.videoElement = document.getElementById('user-camera');
         this.cameraButtonSnap = document.getElementById('camera-button-snap');
@@ -161,4 +161,4 @@ class CameraView {
     }
 }
 
-export default CameraView;
+export default CameraComponent;

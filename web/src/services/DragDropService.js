@@ -1,10 +1,10 @@
-import DragDropModel from '../../data/models/DragDropModel.js';
-import DragDropView from '../views/DragDropView.js';
+import DragDropModel from '../data/models/DragDropModel.js';
+import DragDropComponent from '../components/DragDropComponent.js';
 
-class DragDropViewModel {
+class DragDropService {
 	constructor(httpClient) {
 		this.dragDropModel = new DragDropModel(httpClient);
-		this.dragDropView = new DragDropView();
+		this.dragDropView = new DragDropComponent();
 
 		this.dragDropView.bindDragOver(this.handleDragOver.bind(this));
 		this.dragDropView.bindDrop(this.handleDrop.bind(this));
@@ -41,4 +41,4 @@ class DragDropViewModel {
 	}
 }
 
-export default DragDropViewModel;
+export default DragDropService;

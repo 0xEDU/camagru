@@ -1,5 +1,5 @@
-import CameraViewModel from './ui/viewmodels/CameraViewModel.js';
-import DragDropViewModel from './ui/viewmodels/DragDropViewModel.js';
+import CameraService from './services/CameraService.js';
+import DragDropService from './services/DragDropService.js';
 import HttpClient from './network/HttpClient.js';
 import { Router } from './routing/Router.js';
 
@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	await router.navigateTo('/home');
 
-	const cameraViewModel = new CameraViewModel(httpClient);
+	const cameraViewModel = new CameraService(httpClient);
 	await cameraViewModel.initialize();
 
-	const dragDropViewModel = new DragDropViewModel(httpClient);
+	const dragDropViewModel = new DragDropService(httpClient);
 	await dragDropViewModel.fetchSuperposables();
 	dragDropViewModel.loadImages();
 });

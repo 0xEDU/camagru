@@ -1,11 +1,11 @@
-import CameraModel from '../../data/models/CameraModel.js';
-import CameraView from '../views/CameraView.js';
+import CameraModel from '../data/models/CameraModel.js';
+import CameraComponent from '../components/CameraComponent.js';
 
-class CameraViewModel {
+class CameraService {
     constructor(httpClient) {
         this.httpClient = httpClient;
         this.cameraModel = new CameraModel();
-        this.cameraView = new CameraView();
+        this.cameraView = new CameraComponent();
 
         this.cameraView.bindCapture(this.handleCapture.bind(this));
         this.cameraView.bindSave(this.handleSave.bind(this));
@@ -41,4 +41,4 @@ class CameraViewModel {
     }
 }
 
-export default CameraViewModel;
+export default CameraService;
