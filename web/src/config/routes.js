@@ -22,7 +22,15 @@ const routes = [
 		// destroy() {
 		// 	this.components.forEach(component => component.destroy());
 		// }
-	}
+	},
+	{
+		path: '/gallery',
+		async initialize(httpClient) {
+		},
+		// destroy() {
+		// 	this.components.forEach(component => component.destroy());
+		// }
+	},
 ]
 
 export default routes;
