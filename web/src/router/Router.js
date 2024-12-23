@@ -13,16 +13,13 @@ export class Router {
 
     async navigateTo(path) {
         const route = this._routes.find(r => r.path === path);
-
-        if (!route) {
+        if (!route || route.path === this._currentRoute?.path) {
             return;
         }
-
         if (this._currentRoute) {
             // currentRoute.components.forEach(component => component.destroy());
         }
         this._currentRoute = route;
-
         const routeData = await this.httpClient.get(route.path);
         const innerHtml = routeData['data'];
         emptyElement(this._mainSection.id);
