@@ -5,39 +5,17 @@ class CameraService {
     constructor(httpClient) {
         this.httpClient = httpClient;
         this.cameraModel = new CameraModel();
-        this.cameraView = new CameraComponent();
-
-        this.cameraView.bindCapture(this.handleCapture.bind(this));
-        this.cameraView.bindSave(this.handleSave.bind(this));
-        this.cameraView.bindRetry(this.handleRetry.bind(this));
-        this.cameraView.bindRefresh(this.handleRefresh.bind(this));
     }
 
-    async initialize() {
+    async getCameraStream() {
         const stream = await this.cameraModel.initializeCamera();
-        this.cameraView.bindStream(stream);
+        return stream;
     }
 
-    async handleSave() {
-        const encodedImage = await this.cameraView.encodeCapturedImage();
-
+    async saveEncodedImage(encodedImage) {
         const body = { "image": encodedImage };
         const response = await this.httpClient.post('/images', body);
-        const id = response.data.id;
-
-        this.cameraView.updateLastTakenPicsGallery(id, encodedImage);
-    }
-
-    handleCapture() {
-        this.cameraView.snapPicture();
-    }
-
-    handleRetry() {
-        this.cameraView.displayCamera();
-    }
-
-    handleRefresh() {
-        this.cameraView.refreshDraggableImages();
+        return response.data.id;
     }
 }
 

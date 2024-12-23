@@ -2,7 +2,9 @@ import insertElement from '../libs/tinyDOM/insertElement.js'
 import deleteElement from '../libs/tinyDOM/deleteElement.js'
 
 class CameraComponent {
-    constructor() {
+    constructor(cameraService) {
+        this.cameraService = cameraService;
+
         this.videoElement = document.getElementById('user-camera');
         this.cameraButtonSnap = document.getElementById('camera-button-snap');
         this.cameraButtonRetry = document.getElementById('camera-button-retry');
@@ -14,24 +16,12 @@ class CameraComponent {
         this._parser = new DOMParser();
     }
 
-    bindStream(stream) {
-        this.videoElement.srcObject = stream;
-    }
-
-    bindCapture(handler) {
-        this.cameraButtonSnap.addEventListener('click', handler);
-    }
-
-    bindRetry(handler) {
-        this.cameraButtonRetry.addEventListener('click', handler);
-    }
-
-    bindRefresh(handler) {
-        this.cameraButtonRefresh.addEventListener('click', handler);
-    }
-
-    bindSave(handler) {
-        this.cameraButtonSave.addEventListener('click', handler);
+    async initialize() {
+        this.videoElement.srcObject = await this.cameraService.getCameraStream();
+        this.cameraButtonSnap.addEventListener('click', this.snapPicture.bind(this));
+        this.cameraButtonRetry.addEventListener('click', this.displayCamera.bind(this));
+        this.cameraButtonRefresh.addEventListener('click', this.refreshDraggableImages.bind(this));
+        this.cameraButtonSave.addEventListener('click', this.saveCapturedImage.bind(this));
     }
 
     displayCameraButtons() {
@@ -60,6 +50,12 @@ class CameraComponent {
 
         const capturedImage = `<img id="captured-image" class="w-9/12 rounded-xl shadow" src="${encodedImage}" alt="Catpured Image" />`;
         insertElement(this.imageArea.id, capturedImage);
+    }
+
+    async saveCapturedImage() {
+        const encodedImage = await this.encodeCapturedImage();
+        const id = await this.cameraService.saveEncodedImage(encodedImage);
+        this.updateLastTakenPicsGallery(id, encodedImage);
     }
 
     async encodeCapturedImage() {
