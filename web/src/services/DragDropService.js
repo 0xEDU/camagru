@@ -1,14 +1,13 @@
-import DragDropModel from '../data/models/DragDropModel.js';
 import DragDropComponent from '../components/DragDropComponent.js';
 
 class DragDropService {
 	constructor(httpClient) {
-		this.dragDropModel = new DragDropModel(httpClient);
+		this.httpClient = httpClient;
 	}
 
 	async getImages() {
-		await this.dragDropModel.fetchSuperposables();
-		return this.dragDropModel.getImages();
+        const response = await this.httpClient.get('/superposables');
+		return response.data;
 	}
 }
 
