@@ -12,9 +12,14 @@
 </head>
 
 <body class="w-screen h-screen flex flex-col">
-	<header class="w-screen bg-color-secondary border-b border-color-primary text-black font-mono text-3xl">
+	<header id="menu-section" class="w-screen bg-color-secondary border-b border-color-primary text-black font-mono text-3xl">
 		<section class="flex items-center justify-between">
-			<h1 class="p-4 text-black">Camagru</h1>
+			<section class="flex align-bottom">
+				<button id="home-button" type="button">
+					<h1 class="p-4 text-black">Camagru</h1>
+				</button>
+				<button id="gallery-button" type="button" class="p-4 text-xl">Gallery</button>
+			</section>
 			<i class="bi-alarm p-4"></i>
 		</section>
 	</header>
