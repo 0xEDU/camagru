@@ -57,7 +57,7 @@ class CameraComponent {
     async saveCapturedImage() {
         const encodedImage = await this._encodeCapturedImage();
         const id = await this.cameraService.saveEncodedImage(encodedImage);
-        this.updateLastTakenPicsGallery(id, encodedImage);
+        this._updateLastTakenPicsGallery(id, encodedImage);
     }
 
     async _encodeCapturedImage() {
@@ -85,7 +85,7 @@ class CameraComponent {
         return Promise.all(drawImagesPromises).then(() => canvas.toDataURL('image/png'));
     }
 
-    updateLastTakenPicsGallery(id, encodedImage) {
+    _updateLastTakenPicsGallery(id, encodedImage) {
         const imageHtml = `<img id="gallery-image-${id}" class="w-full h-[18vh] p-2 object-scale-down" src="${encodedImage}">`;
         const placeholder = document.getElementById('gallery-placeholder');
         if (!placeholder) {

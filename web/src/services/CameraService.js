@@ -1,14 +1,14 @@
-import CameraModel from '../data/models/CameraModel.js';
-import CameraComponent from '../components/CameraComponent.js';
-
 class CameraService {
     constructor(httpClient) {
         this.httpClient = httpClient;
-        this.cameraModel = new CameraModel();
     }
 
     async getCameraStream() {
-        const stream = await this.cameraModel.initializeCamera();
+        const constraints = {
+            audio: false,
+            video: { facingMode: 'user' }
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         return stream;
     }
 
