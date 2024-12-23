@@ -1,10 +1,46 @@
 class DragDropComponent {
-	constructor() {
+	constructor(dragDropService) {
 		this.imageCarousel = document.getElementById('image-carousel');
 		this.dropArea = document.getElementById('drop-area');
+
+		this.dragDropService = dragDropService;
 	}
 
-	renderImage(image, onDragStart) {
+	async initialize() {
+		this.dropArea.addEventListener('dragover', this.handleDragOver.bind(this));
+		this.dropArea.addEventListener('drop', this.handleDrop.bind(this));
+
+		const images = await this.dragDropService.getImages();
+		this.renderImages(images, this.handleDragStart.bind(this));
+	}
+
+	handleDragOver(event) {
+		event.preventDefault(); // Necessary to allow dropping
+	}
+
+	handleDrop(event) {
+		event.preventDefault();
+	
+		const id = event.dataTransfer.getData('text/plain');
+		const draggedElement = document.getElementById(id);
+	
+		const x = event.clientX - this.dropArea.offsetLeft - (draggedElement.offsetWidth / 2);
+		const y = event.clientY - this.dropArea.offsetTop - (draggedElement.offsetHeight / 2);
+	
+		this._moveElementToDropArea(draggedElement, x, y);
+		this._removeElementFromCarousel(draggedElement);
+	}
+
+	renderImages(images, onDragStart) {
+		this.imageCarousel.innerHTML = ''; // Clear previous images
+		images.forEach(image => this._renderImage(image, onDragStart));
+	}
+
+	handleDragStart(event) {
+		event.dataTransfer.setData('text/plain', event.target.id);
+	}
+
+	_renderImage(image, onDragStart) {
 		const imgElement = document.createElement('img');
 		imgElement.id = image.id;
 		imgElement.src = image.src;
@@ -19,27 +55,14 @@ class DragDropComponent {
 		this.imageCarousel.appendChild(imgElement);
 	}
 
-	renderImages(images, onDragStart) {
-		this.imageCarousel.innerHTML = ''; // Clear previous images
-		images.forEach(image => this.renderImage(image, onDragStart));
-	}
-
-	bindDragOver(handler) {
-		this.dropArea.addEventListener('dragover', handler);
-	}
-
-	bindDrop(handler) {
-		this.dropArea.addEventListener('drop', handler);
-	}
-
-	moveElementToDropArea(element, x, y) {
+	_moveElementToDropArea(element, x, y) {
 		element.style.left = `${x}px`;
 		element.style.top = `${y}px`;
 		element.style.position = 'absolute';
 		this.dropArea.appendChild(element);
 	}
 
-	removeElementFromCarousel(element) {
+	_removeElementFromCarousel(element) {
 		if (this.imageCarousel.contains(element)) {
 			this.imageCarousel.removeChild(element);
 		}
