@@ -24,26 +24,8 @@ class CameraComponent {
         this.cameraButtonSave.addEventListener('click', this.saveCapturedImage.bind(this));
     }
 
-    displayCameraButtons() {
-        this.cameraButtonSnap.style.display = '';
-        this.cameraButtonRetry.style.display = 'none';
-        this.cameraButtonSave.style.display = 'none';
-    }
-
-    displayCaptureButtons() {
-        this.cameraButtonSnap.style.display = 'none';
-        this.cameraButtonRetry.style.display = '';
-        this.cameraButtonSave.style.display = '';
-    }
-
-    displayCamera() {
-        this.displayCameraButtons();
-        this.videoElement.style.display = '';
-        deleteElement('captured-image');
-    }
-
     snapPicture() {
-        this.displayCaptureButtons();
+        this._displayCaptureButtons();
         const canvas = this._getNewCanvasFromElement(this.videoElement);
         const encodedImage = canvas.toDataURL('image/png');
         this.videoElement.style.display = 'none';
@@ -52,13 +34,33 @@ class CameraComponent {
         insertElement(this.imageArea.id, capturedImage);
     }
 
+    displayCamera() {
+        this._displayCameraButtons();
+        this.videoElement.style.display = '';
+        deleteElement('captured-image');
+    }
+
+    refreshDraggableImages() {
+        const draggableImages = this._getDraggableImages();
+        if (draggableImages.length === 0) return;
+        draggableImages.forEach((image) => {
+            image.style.left = '';
+            image.style.top = '';
+            image.style.position = '';
+
+            const carousel = document.getElementById('image-carousel');
+            carousel.appendChild(image);
+            this.imageArea.removeChild(image);
+        });
+    }
+
     async saveCapturedImage() {
-        const encodedImage = await this.encodeCapturedImage();
+        const encodedImage = await this._encodeCapturedImage();
         const id = await this.cameraService.saveEncodedImage(encodedImage);
         this.updateLastTakenPicsGallery(id, encodedImage);
     }
 
-    async encodeCapturedImage() {
+    async _encodeCapturedImage() {
         const capturedImage = document.getElementById('captured-image');
         const canvas = this._getNewCanvasFromElement(capturedImage);
         const draggableImages = this._getDraggableImages(this.imageArea);
@@ -95,19 +97,18 @@ class CameraComponent {
         }
     }
 
-    refreshDraggableImages() {
-        const draggableImages = this._getDraggableImages();
-        if (draggableImages.length === 0) return;
-        draggableImages.forEach((image) => {
-            image.style.left = '';
-            image.style.top = '';
-            image.style.position = '';
-
-            const carousel = document.getElementById('image-carousel');
-            carousel.appendChild(image);
-            this.imageArea.removeChild(image);
-        });
+    _displayCameraButtons() {
+        this.cameraButtonSnap.style.display = '';
+        this.cameraButtonRetry.style.display = 'none';
+        this.cameraButtonSave.style.display = 'none';
     }
+
+    _displayCaptureButtons() {
+        this.cameraButtonSnap.style.display = 'none';
+        this.cameraButtonRetry.style.display = '';
+        this.cameraButtonSave.style.display = '';
+    }
+
 
     _getNewCanvasFromElement(element) {
         const canvas = document.createElement('canvas');
