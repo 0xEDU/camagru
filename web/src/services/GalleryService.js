@@ -3,7 +3,7 @@ export default class GalleryService {
 		this.httpClient = httpClient;
 	}
 
-	fetchCaptures(page) {
-		return this.httpClient.get(`/captures?page=${page}`);
+	async fetchCaptures(page) {
+		return await this.httpClient.get(`/gallery?page=${page}`);
 	}
 }
