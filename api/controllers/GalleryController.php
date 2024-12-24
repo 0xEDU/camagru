@@ -11,9 +11,24 @@ class GalleryController
 
 	private function handleGetRequest()
 	{
-		$htmlContent = $this->loadView('gallery');
-		header ('Content-Type: application/json');
+		$captures = $this->getCaptures();
+
+		$htmlContent = $this->loadView('gallery', ['captures' => $captures]);
+		header('Content-Type: application/json');
 		echo json_encode(['data' => $htmlContent]);
+	}
+
+	private function getCaptures() {
+		$capturesDir = __DIR__ . '/../imgs/captures';
+		$captures = [];
+
+		$files = scandir($capturesDir);
+		foreach ($files as $file) {
+			if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
+				$captures[] = 'http://localhost:8042/imgs/captures/' . $file;
+			}
+		}
+		return $captures;
 	}
 
 	private function loadView($view, $data = [])
