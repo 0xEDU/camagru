@@ -11,7 +11,7 @@ class GalleryController
 
 	private function handleGetRequest($requestedPage = 1)
 	{
-		$page = $requestedPage;
+		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$perPage = 20;
 
 		$captures = $this->getCaptures();
@@ -19,7 +19,8 @@ class GalleryController
 		$totalCaptures = count($captures);
 		$captures = array_slice($captures, ($page - 1) * $perPage, $perPage);
 
-		$htmlContent = $this->loadView('gallery', ['captures' => $captures]);
+		$view = $requestedPage === 1 ? 'gallery' : 'captures';
+		$htmlContent = $this->loadView($view, ['captures' => $captures]);
 		header('Content-Type: application/json');
 		echo json_encode([
 			'data' => $htmlContent,
@@ -28,7 +29,8 @@ class GalleryController
 		]);
 	}
 
-	private function getCaptures() {
+	private function getCaptures()
+	{
 		$capturesDir = __DIR__ . '/../imgs/captures';
 		$captures = [];
 
