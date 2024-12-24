@@ -2,6 +2,8 @@ import CameraService from "../services/CameraService";
 import CameraComponent from "../components/CameraComponent";
 import DragDropService from "../services/DragDropService";
 import DragDropComponent from "../components/DragDropComponent";
+import GalleryComponent from "../components/GalleryComponent";
+import GalleryService from "../services/GalleryService";
 
 const routes = [
 	{
@@ -26,6 +28,11 @@ const routes = [
 	{
 		path: '/gallery',
 		async initialize(httpClient) {
+			this.components = [];
+
+			const galleryService = new GalleryService(httpClient);
+			const galleryComponent = new GalleryComponent(galleryService);
+			await galleryComponent.initialize();
 		},
 		// destroy() {
 		// 	this.components.forEach(component => component.destroy());
