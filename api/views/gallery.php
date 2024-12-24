@@ -1,4 +1,4 @@
-<section class="p-4">
+<section id="gallery-grid" class="p-4">
     <?php if (!empty($captures)): ?>
         <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
             <?php foreach ($captures as $capture): ?>
