@@ -5,6 +5,7 @@ export default class GalleryComponent {
 		this.galleryService = galleryService;
 
 		this.galleryGrid = document.getElementById('gallery-grid');
+		this.galleryLoading = document.getElementById('gallery-loading');
 
 		this.currentPage = 1;
 		this.hasMore = true;
@@ -27,6 +28,7 @@ export default class GalleryComponent {
 		const fullHeight = document.body.offsetHeight;
 
 		if (scrollTop + viewportHeight >= fullHeight - 200 && this.hasMore) {
+			this.galleryLoading.style.display = 'none';
 			await this._fetchNextPage();
 		}
 	}
