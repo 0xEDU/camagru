@@ -9,13 +9,23 @@ class GalleryController
 		}
 	}
 
-	private function handleGetRequest()
+	private function handleGetRequest($requestedPage = 1)
 	{
+		$page = $requestedPage;
+		$perPage = 20;
+
 		$captures = $this->getCaptures();
+
+		$totalCaptures = count($captures);
+		$captures = array_slice($captures, ($page - 1) * $perPage, $perPage);
 
 		$htmlContent = $this->loadView('gallery', ['captures' => $captures]);
 		header('Content-Type: application/json');
-		echo json_encode(['data' => $htmlContent]);
+		echo json_encode([
+			'data' => $htmlContent,
+			'page' => $page,
+			'hasMore' => ($page * $perPage) < $totalCaptures
+		]);
 	}
 
 	private function getCaptures() {
