@@ -24,6 +24,14 @@ class CameraComponent {
         this.cameraButtonSave.addEventListener('click', this.saveCapturedImage.bind(this));
     }
 
+    destroy() {
+        this.cameraButtonSnap.removeEventListener('click', this.snapPicture);
+        this.cameraButtonRetry.removeEventListener('click', this.displayCamera);
+        this.cameraButtonRefresh.removeEventListener('click', this.refreshDraggableImages);
+        this.cameraButtonSave.removeEventListener('click', this.saveCapturedImage);
+        this.cameraService.closeStream(this.videoElement.srcObject);
+    }
+
     snapPicture() {
         this._displayCaptureButtons();
         const canvas = this._getNewCanvasFromElement(this.videoElement);

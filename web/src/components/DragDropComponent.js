@@ -14,6 +14,11 @@ class DragDropComponent {
 		this.renderImages(images, this.handleDragStart.bind(this));
 	}
 
+	destroy() {
+		this.dropArea.removeEventListener('dragover', this.handleDragOver);
+		this.dropArea.removeEventListener('drop', this.handleDrop);
+	}
+
 	handleDragOver(event) {
 		event.preventDefault(); // Necessary to allow dropping
 	}

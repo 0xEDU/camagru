@@ -17,7 +17,7 @@ export class Router {
             return;
         }
         if (this._currentRoute) {
-            // currentRoute.components.forEach(component => component.destroy());
+            await this._currentRoute.destroy();
         }
         this._currentRoute = route;
         const routeData = await this.httpClient.get(route.path);

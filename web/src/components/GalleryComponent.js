@@ -15,6 +15,10 @@ export default class GalleryComponent {
 		window.addEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
 	}
 
+	destroy() {
+		window.removeEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
+	}
+
 	_debounce(func, delay) {
 		return (...args) => {
 			clearTimeout(this.scrollTimeout);

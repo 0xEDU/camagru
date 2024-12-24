@@ -17,6 +17,11 @@ class CameraService {
         const response = await this.httpClient.post('/images', body);
         return response.data.id;
     }
+
+    closeStream(stream) {
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+    }
 }
 
 export default CameraService;

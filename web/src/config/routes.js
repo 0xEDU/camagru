@@ -21,9 +21,9 @@ const routes = [
 			this.components.push(dragDropComponent);
 			await dragDropComponent.initialize();
 		},
-		// destroy() {
-		// 	this.components.forEach(component => component.destroy());
-		// }
+		destroy() {
+			this.components.forEach(component => component.destroy());
+		}
 	},
 	{
 		path: '/gallery',
@@ -34,9 +34,9 @@ const routes = [
 			const galleryComponent = new GalleryComponent(galleryService);
 			await galleryComponent.initialize();
 		},
-		// destroy() {
-		// 	this.components.forEach(component => component.destroy());
-		// }
+		destroy() {
+			this.components.forEach(component => component.destroy());
+		}
 	},
 ]
 
