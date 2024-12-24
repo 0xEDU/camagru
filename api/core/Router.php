@@ -10,6 +10,7 @@ class Router
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handleGetRequest'],
 			'#^/superposables$#' => ['controller' => 'ImagesController', 'method' => 'handleGetSuperposablesRequest'],
 			'#^/gallery$#' => ['controller' => 'GalleryController', 'method' => 'handleRequest'],
+			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handleRequest'],
 		],
 		'POST' => [
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
