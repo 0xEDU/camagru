@@ -4,6 +4,8 @@ import DragDropService from "../services/DragDropService";
 import DragDropComponent from "../components/DragDropComponent";
 import GalleryComponent from "../components/GalleryComponent";
 import GalleryService from "../services/GalleryService";
+import RegisterService from "../services/RegisterService";
+import RegisterComponent from "../components/RegisterComponent";
 
 const routes = [
 	{
@@ -33,6 +35,19 @@ const routes = [
 			const galleryService = new GalleryService(httpClient);
 			const galleryComponent = new GalleryComponent(galleryService);
 			await galleryComponent.initialize();
+		},
+		destroy() {
+			this.components.forEach(component => component.destroy());
+		}
+	},
+	{
+		path: '/register',
+		async initialize(httpClient) {
+			this.components = [];
+
+			const registerService = new RegisterService(httpClient);
+			const registerComponent = new RegisterComponent(registerService);
+			await registerComponent.initialize();
 		},
 		destroy() {
 			this.components.forEach(component => component.destroy());
