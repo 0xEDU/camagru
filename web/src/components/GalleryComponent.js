@@ -12,6 +12,7 @@ export default class GalleryComponent {
 	}
 
 	async initialize() {
+		this.galleryLoading.style.display = 'none';
 		window.addEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
 	}
 
@@ -32,8 +33,9 @@ export default class GalleryComponent {
 		const fullHeight = document.body.offsetHeight;
 
 		if (scrollTop + viewportHeight >= fullHeight - 200 && this.hasMore) {
-			this.galleryLoading.style.display = 'none';
+			this.galleryLoading.style.display = '';
 			await this._fetchNextPage();
+			this.galleryLoading.style.display = 'none';
 		}
 	}
 
