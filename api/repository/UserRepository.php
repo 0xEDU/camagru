@@ -18,7 +18,10 @@ class UserRepository
     }
 
     public function create(User $user) {
-        $sql = "INSERT INTO users (name, email, password) VALUES (:name, :email, :password)";
+        if ($this->getUserByEmail($user->email)) {
+            return false;
+        }
+        $sql = "INSERT INTO users (email, name, password) VALUES (:email, :name, :password)";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
@@ -27,6 +30,14 @@ class UserRepository
             ':password' => password_hash($user->password, PASSWORD_BCRYPT), // Hashing the password
         ]);
 
-        return $this->pdo->lastInsertId();
+        return $user->email;
+    }
+
+    public function getUserByEmail($email) {
+        $sql = "SELECT * FROM users WHERE email = :email";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':email' => $email]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

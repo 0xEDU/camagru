@@ -73,7 +73,11 @@ class RegisterController
 		// Create the user
 		$user = new User($name, $email, $password);
 		try {
-			$this->userRepository->create($user);
+			if (!$this->userRepository->create($user)) {
+				http_response_code(400);
+				echo json_encode(['error' => 'User already exists.']);
+				return;
+			}
 			http_response_code(201);
 			echo json_encode(['success' => 'User registered successfully.']);
 		} catch (Exception $e) {
