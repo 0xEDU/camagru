@@ -16,9 +16,15 @@ export default class RegisterComponent {
 	_handleRegister(event) {
 		event.preventDefault();
 		
-		const formData = new FormData(event.target);
-		const json = Object.fromEntries(formData.entries());
-		console.log(JSON.stringify(json));
+		const email = document.getElementById('email').value;
+		const user = document.getElementById('user').value;
+		const password = document.getElementById('password').value;
+		const userData = {
+			"email": email,
+			"user": user,
+			"password": password
+		}
+		this.registerService.postRegister(userData)
 
 		this.registerForm.reset();
 	}
