@@ -47,7 +47,7 @@ class RegisterController
 		// Validate name
 		if (!preg_match($nameRegex, $name)) {
 			http_response_code(400);
-			echo json_encode(['error' => 'Invalid name. Only letters and numbers are allowed.']);
+			echo json_encode(['error' => 'Invalid name.']);
 			return;
 		}
 
@@ -61,7 +61,7 @@ class RegisterController
 		// Validate password
 		if (!preg_match($passwordRegex, $password)) {
 			http_response_code(400);
-			echo json_encode(['error' => 'Invalid password. Only OWASP-defined special characters are allowed.']);
+			echo json_encode(['error' => 'Invalid password.']);
 			return;
 		}
 
