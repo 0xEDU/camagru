@@ -14,7 +14,7 @@ export default class RegisterComponent {
 		this.registerForm.removeEventListener('submit', this._handleRegister.bind(this));
 	}
 
-	_handleRegister(event) {
+	async _handleRegister(event) {
 		event.preventDefault();
 
 		// Clear previous error messages
@@ -66,7 +66,7 @@ export default class RegisterComponent {
 		};
 
 		// Send data to the register service
-		this.registerService.postRegister(userData);
+		const response = await this.registerService.postRegister(userData);
 
 		// Reset the form after successful validation
 		this.registerForm.reset();
