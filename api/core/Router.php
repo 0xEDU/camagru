@@ -14,6 +14,7 @@ class Router
 		],
 		'POST' => [
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
+			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handlePostRequest'],
 		],
 	];
 

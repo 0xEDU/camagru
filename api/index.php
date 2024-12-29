@@ -13,6 +13,12 @@ spl_autoload_register(function ($class) {
         require __DIR__ . '/./controllers/' . $class . '.php';
     } elseif (file_exists(__DIR__ . '/./core/' . $class . '.php')) {
         require __DIR__ . '/./core/' . $class . '.php';
+    } elseif (file_exists(__DIR__ . '/./repository/' . $class . '.php')) {
+        require __DIR__ . '/./repository/' . $class . '.php';
+    } elseif (file_exists(__DIR__ . '/./config/' . $class . '.php')) {
+        require __DIR__ . '/./config/' . $class . '.php';
+    } elseif (file_exists(__DIR__ . '/./models/' . $class . '.php')) {
+        require __DIR__ . '/./models/' . $class . '.php';
     }
 });
 
