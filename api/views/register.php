@@ -1,4 +1,4 @@
-<section class="font-mono flex items-center justify-center w-full">
+<section class="font-mono flex flex-col items-center justify-center w-full">
 	<form id="register-form" class="flex flex-col items-center">
 		<div class="mb-5">
 			<label for="email" class="block">Your email</label>
@@ -14,4 +14,5 @@
 		</div>
 		<button type="submit" class="bg-color-secondary rounded-lg w-auto px-5 py-2.5">Submit</button>
 	</form>
+	<section id="error-message"></section>
 </section>
