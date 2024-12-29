@@ -17,11 +17,11 @@ export default class RegisterComponent {
 		event.preventDefault();
 		
 		const email = document.getElementById('email').value;
-		const user = document.getElementById('user').value;
+		const name = document.getElementById('name').value;
 		const password = document.getElementById('password').value;
 		const userData = {
 			"email": email,
-			"user": user,
+			"name": name,
 			"password": password
 		}
 		this.registerService.postRegister(userData)
