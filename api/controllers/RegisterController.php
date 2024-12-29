@@ -2,6 +2,12 @@
 
 class RegisterController
 {
+	private $userRepository;
+
+	public function __construct() {
+		$this->userRepository = new UserRepository();
+	}
+
 	public function handleRequest()
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -22,5 +28,12 @@ class RegisterController
 		ob_start();
 		include __DIR__ . '/../views/' . $view . '.php';
 		return ob_get_clean();
+	}
+
+	public function handlePostRequest()
+	{
+		$data = json_decode(file_get_contents('php://input'), true);
+		$user = new User($data['name'], $data['email'], $data['password']);
+		$this->userRepository->create($user);
 	}
 }

@@ -5,8 +5,8 @@
 			<input type="email" id="email" class="p-2.5 rounded-lg" placeholder="user@mail.com" required />
 		</div>
 		<div class="mb-5">
-			<label for="user" class="block">Your username</label>
-			<input type="user" id="text" class="p-2.5 rounded-lg" placeholder="user" required />
+			<label for="name" class="block">Your username</label>
+			<input type="text" id="name" class="p-2.5 rounded-lg" placeholder="user" required />
 		</div>
 		<div class="mb-5">
 			<label for="password" class="block">Your password</label>
