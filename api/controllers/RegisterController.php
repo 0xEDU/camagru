@@ -33,7 +33,53 @@ class RegisterController
 	public function handlePostRequest()
 	{
 		$data = json_decode(file_get_contents('php://input'), true);
-		$user = new User($data['name'], $data['email'], $data['password']);
-		$this->userRepository->create($user);
+
+		// Validate and sanitize inputs
+		$name = $data['name'] ?? '';
+		$email = $data['email'] ?? '';
+		$password = $data['password'] ?? '';
+
+		// Regular expressions for validation
+		$nameRegex = '/^[a-zA-Z0-9]+$/';
+		$emailRegex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+		$passwordRegex = '/^[\w!@#$%^&*()-+=~]+$/';
+
+		// Validate name
+		if (!preg_match($nameRegex, $name)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid name. Only letters and numbers are allowed.']);
+			return;
+		}
+
+		// Validate email
+		if (!preg_match($emailRegex, $email)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid email format.']);
+			return;
+		}
+
+		// Validate password
+		if (!preg_match($passwordRegex, $password)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid password. Only OWASP-defined special characters are allowed.']);
+			return;
+		}
+
+		// Sanitize inputs to prevent injection attacks
+		$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+		$email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+		$password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+
+		// Create the user
+		$user = new User($name, $email, $password);
+		try {
+			$this->userRepository->create($user);
+			http_response_code(201);
+			echo json_encode(['success' => 'User registered successfully.']);
+		} catch (Exception $e) {
+			http_response_code(500);
+			echo json_encode(['error' => 'Failed to register user.']);
+		}
 	}
+
 }
