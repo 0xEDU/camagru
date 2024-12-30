@@ -35,7 +35,7 @@ class RegisterController
 		$data = json_decode(file_get_contents('php://input'), true);
 
 		// Validate and sanitize inputs
-		$name = $data['name'] ?? '';
+		$username = $data['username'] ?? '';
 		$email = $data['email'] ?? '';
 		$password = $data['password'] ?? '';
 
@@ -45,7 +45,7 @@ class RegisterController
 		$passwordRegex = '/^[\w!@#$%^&*()-+=~]+$/';
 
 		// Validate name
-		if (!preg_match($nameRegex, $name)) {
+		if (!preg_match($nameRegex, $username)) {
 			http_response_code(400);
 			echo json_encode(['error' => 'Invalid name.']);
 			return;
@@ -66,12 +66,12 @@ class RegisterController
 		}
 
 		// Sanitize inputs to prevent injection attacks
-		$name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
+		$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
 		$email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 		$password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
 
 		// Create the user
-		$user = new User($name, $email, $password);
+		$user = new User($username, $email, $password);
 		try {
 			if (!$this->userRepository->create($user)) {
 				http_response_code(400);

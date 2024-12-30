@@ -22,7 +22,7 @@ export default class RegisterComponent {
 
 		// Get input values
 		const email = document.getElementById('email').value.trim();
-		const name = document.getElementById('name').value.trim();
+		const username = document.getElementById('name').value.trim();
 		const password = document.getElementById('password').value;
 
 		// Regular expressions for validation
@@ -35,7 +35,7 @@ export default class RegisterComponent {
 		let errors = [];
 
 		// Validate name
-		if (!nameRegex.test(name)) {
+		if (!nameRegex.test(username)) {
 			valid = false;
 			errors.push("Name must contain only letters and numbers.");
 		}
@@ -61,7 +61,7 @@ export default class RegisterComponent {
 		// Data to send
 		const userData = {
 			email,
-			name,
+			username,
 			password
 		};
 

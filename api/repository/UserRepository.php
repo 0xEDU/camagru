@@ -21,16 +21,16 @@ class UserRepository
         if ($this->getUserByEmail($user->email)) {
             return false;
         }
-        $sql = "INSERT INTO users (email, name, password) VALUES (:email, :name, :password)";
+        $sql = "INSERT INTO users (email, username, password) VALUES (:email, :username, :password)";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->execute([
-            ':name' => $user->name,
+            ':username' => $user->username,
             ':email' => $user->email,
             ':password' => password_hash($user->password, PASSWORD_BCRYPT), // Hashing the password
         ]);
 
-        return $user->email;
+        return $this->pdo->lastInsertId();
     }
 
     public function getUserByEmail($email) {
