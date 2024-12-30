@@ -75,7 +75,7 @@ class RegisterController
 		try {
 			if (!$this->userRepository->create($user)) {
 				http_response_code(400);
-				echo json_encode(['error' => 'User already exists.']);
+				echo json_encode(['error' => 'Username or email already exists.']);
 				return;
 			}
 			http_response_code(201);

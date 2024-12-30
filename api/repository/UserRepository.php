@@ -18,7 +18,7 @@ class UserRepository
     }
 
     public function create(User $user) {
-        if ($this->getUserByEmail($user->email)) {
+        if ($this->getUserByEmail($user->email) || $this->getUserByUsername($user->username)) {
             return false;
         }
         $sql = "INSERT INTO users (email, username, password) VALUES (:email, :username, :password)";
@@ -37,6 +37,14 @@ class UserRepository
         $sql = "SELECT * FROM users WHERE email = :email";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':email' => $email]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function getUserByUsername($username) {
+        $sql = "SELECT * FROM users WHERE username = :username";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':username' => $username]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
