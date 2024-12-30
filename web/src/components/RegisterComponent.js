@@ -67,6 +67,10 @@ export default class RegisterComponent {
 
 		// Send data to the register service
 		const response = await this.registerService.postRegister(userData);
+		if (response instanceof Error) {
+			this._displayErrorMessage([response.message]);
+			return;
+		}
 
 		// Reset the form after successful validation
 		this.registerForm.reset();

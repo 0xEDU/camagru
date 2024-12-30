@@ -5,10 +5,10 @@ export default class RegisterService {
 
 	async postRegister(userData) {
 		try {
-			const response = await this.httpClient.post('/register', userData)
-			return response
+			const response = await this.httpClient.post('/register', userData);
+			return response;
 		} catch (error) {
-			return error.message
+			return error;
 		}
 	}
 }
