@@ -3,7 +3,7 @@ export default class RegisterComponent {
 		this.registerService = registerService;
 
 		this.registerForm = document.getElementById('register-form');
-		this.errorMessage = document.getElementById('error-message');
+		this.formMessage = document.getElementById('form-message');
 	}
 
 	async initialize() {
@@ -16,8 +16,6 @@ export default class RegisterComponent {
 
 	async _handleRegister(event) {
 		event.preventDefault();
-
-		// Clear previous error messages
 		this._clearErrorMessage();
 
 		// Get input values
@@ -30,7 +28,6 @@ export default class RegisterComponent {
 		const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 		const passwordRegex = /^(?=.*[!@#$%^&*()-+=~])(?=.*\d)[\w!@#$%^&*()-+=~]{6,}$/; // At least 6 chars, 1 special char, 1 number
 
-		// Validation flags
 		let valid = true;
 		let errors = [];
 
@@ -52,7 +49,6 @@ export default class RegisterComponent {
 			errors.push("Password must be at least 6 characters, include at least 1 special character, and 1 number.");
 		}
 
-		// If invalid, show error messages and stop
 		if (!valid) {
 			this._displayErrorMessage(errors);
 			return;
@@ -65,7 +61,6 @@ export default class RegisterComponent {
 			password
 		};
 
-		// Send data to the register service
 		const response = await this.registerService.postRegister(userData);
 		if (response instanceof Error) {
 			this._displayErrorMessage([response.message]);
@@ -74,14 +69,25 @@ export default class RegisterComponent {
 
 		// Reset the form after successful validation
 		this.registerForm.reset();
+
+		this._displaySuccessMessage();
+		setTimeout(() => {
+			window.location.reload();
+		}, 2000);
+			
+	}
+
+	_displaySuccessMessage() {
+		this.formMessage.innerHTML = 'Registered successfully!';
+		this.formMessage.style.color = 'green';
 	}
 
 	_displayErrorMessage(errors) {
-		this.errorMessage.innerHTML = errors.map(error => `<p>${error}</p>`).join('');
-		this.errorMessage.style.color = 'red';
+		this.formMessage.innerHTML = errors.map(error => `<p>${error}</p>`).join('');
+		this.formMessage.style.color = 'red';
 	}
 
 	_clearErrorMessage() {
-		this.errorMessage.innerHTML = '';
+		this.formMessage.innerHTML = '';
 	}
 }

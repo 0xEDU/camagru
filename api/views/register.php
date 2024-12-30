@@ -14,5 +14,5 @@
 		</div>
 		<button type="submit" class="bg-color-secondary rounded-lg w-auto px-5 py-2.5">Submit</button>
 	</form>
-	<section id="error-message"></section>
+	<section id="form-message"></section>
 </section>
