@@ -73,11 +73,13 @@ class RegisterController
 		// Create the user
 		$user = new User($username, $email, $password);
 		try {
-			if (!$this->userRepository->create($user)) {
+			list($id, $token) = $this->userRepository->create($user);
+			if (!$id) {
 				http_response_code(400);
 				echo json_encode(['error' => 'Username or email already exists.']);
 				return;
 			}
+			$this->send_confirmation_email($email, $token);
 			http_response_code(201);
 			echo json_encode(['success' => 'User registered successfully.']);
 		} catch (Exception $e) {
@@ -86,4 +88,26 @@ class RegisterController
 		}
 	}
 
+	private function send_confirmation_email($email, $token)
+	{
+		$to = $email;
+		$subject = "Account Confirmation";
+		$message = "Click the link below to confirm your account: http://localhost:8042/confirm?token=" . $token;
+		$headers = "From: no-reply@camagru.com";
+
+		mail($to, $subject, $message, $headers);
+	}
+
+	public function handleConfirmationRequest()
+	{
+		$token = $_GET['token'] ?? '';
+		$user = $this->userRepository->getUserByToken($token);
+		
+		if (!$user) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid token.']);
+			return;
+		}
+		$this->userRepository->confirmUser($user['id']);
+	}
 }
