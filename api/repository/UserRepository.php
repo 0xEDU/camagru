@@ -60,7 +60,7 @@ class UserRepository
     }
 
     public function confirmUser($id) {
-        $sql = "UPDATE users SET is_active = 1 WHERE id = :id";
+        $sql = "UPDATE users SET is_active = true WHERE id = :id";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id' => $id]);
     }
