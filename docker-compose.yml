@@ -36,6 +36,16 @@ services:
     networks:
       - camagru
 
+  mailhog:
+      image: mailhog/mailhog
+      container_name: mailhog
+      restart: always
+      ports:
+          - "1025:1025"
+          - "8025:8025"
+      networks:
+          - camagru
+
 networks:
   camagru:
     driver: bridge
