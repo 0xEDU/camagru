@@ -28,6 +28,24 @@ class LoginController {
 		$username = $data['username'];
 		$password = $data['password'];
 
+		$usernameRegex = '/^[a-zA-Z0-9]+$/';
+		$passwordRegex = '/^[\w!@#$%^&*()-+=~]+$/';
+
+		if (!preg_match($usernameRegex, $username)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid username or password.']);
+			return;
+		}
+
+		if (!preg_match($passwordRegex, $password)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid username or password.']);
+			return;
+		}
+
+		$username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+		$password = htmlspecialchars($password, ENT_QUOTES, 'UTF-8');
+
 		$user = $this->userRepository->getUserByUsername($username);
 
 		if ($user && $user['is_active'] && password_verify($password, $user['password'])) {
