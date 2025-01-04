@@ -40,4 +40,20 @@ class ImageRepository {
 
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
+
+	public function incrementLike($image_id) {
+		$sql = "UPDATE images SET likes = likes + 1 WHERE image_id = :image_id";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([':image_id' => $image_id]);
+
+		return $this->getLikes($image_id)['likes'];
+	}
+
+	public function decrementLike($image_id) {
+		$sql = "UPDATE images SET likes = likes - 1 WHERE image_id = :image_id";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([':image_id' => $image_id]);
+
+		return $this->getLikes($image_id)['likes'];
+	}
 }

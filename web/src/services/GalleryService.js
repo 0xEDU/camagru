@@ -6,4 +6,16 @@ export default class GalleryService {
 	async fetchCaptures(page) {
 		return await this.httpClient.get(`/gallery?page=${page}`);
 	}
+
+	async addLike(id) {
+		return await this.httpClient.post(`/gallery/${id}/like`, {}, {
+			'operation': 'add'
+		});
+	}
+
+	async deleteLike(id) {
+		return await this.httpClient.post(`/gallery/${id}/like`, {}, {
+			'operation': 'remove'
+		});
+	}
 }

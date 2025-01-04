@@ -14,6 +14,9 @@ export default class GalleryComponent {
 	async initialize() {
 		this.galleryLoading.style.display = 'none';
 		window.addEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
+		for (const item of this.galleryGrid.firstElementChild.children) {
+			item.querySelector('.like-icon').addEventListener('click', this._handleLike.bind(this));
+		}
 	}
 
 	destroy() {
@@ -25,6 +28,25 @@ export default class GalleryComponent {
 			clearTimeout(this.scrollTimeout);
 			this.scrollTimeout = setTimeout(() => func(...args), delay);
 		};
+	}
+
+	async _handleLike(event) {
+		const id = event.target.parentElement.parentElement.firstElementChild.src.split('.')[0].split('/')[5] 
+		let response;
+		if (event.target.classList.contains('liked')) {
+			event.target.classList.remove('liked');
+			event.target.classList.add('bi-heart');
+			event.target.classList.remove('bi-heart-fill');
+			response = await this.galleryService.deleteLike(id);
+		} else {
+			event.target.classList.add('liked');
+			event.target.classList.remove('bi-heart');
+			event.target.classList.add('bi-heart-fill');
+			response = await this.galleryService.addLike(id);
+		}
+		if (!(response instanceof Error)) {
+			event.target.nextElementSibling.innerText = response.likes;
+		}
 	}
 
 	async _handleScroll() {

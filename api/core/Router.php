@@ -18,6 +18,7 @@ class Router
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
 			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handlePostRequest'],
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handlePostRequest'],
+			'#^/gallery/(\w+)/like$#' => ['controller' => 'GalleryController', 'method' => 'handlePostRequest'],
 		],
 	];
 

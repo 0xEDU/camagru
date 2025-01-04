@@ -65,4 +65,20 @@ class GalleryController
 		include __DIR__ . '/../views/' . $view . '.php';
 		return ob_get_clean();
 	}
+
+	public function handlePostRequest($id)
+	{
+		$operation = $_SERVER['HTTP_OPERATION'];
+		if ($operation !== 'add' && $operation !== 'remove') {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid operation.']);
+			return;
+		} else if ($operation === 'add') {
+			$likes = $this->imageRepository->incrementLike($id);
+			echo json_encode(['likes' => $likes]);
+		} else {
+			$likes = $this->imageRepository->decrementLike($id);
+			echo json_encode(['likes' => $likes]);
+		}
+	}
 }

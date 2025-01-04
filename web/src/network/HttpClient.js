@@ -10,14 +10,13 @@ class HttpClient {
 		return checkedResponse.json();
 	}
 
-	async post(endpoint, data) {
+	async post(endpoint, data, headers = {}) {
 		const url = `${this.baseUrl}${endpoint}`;
+		headers['Content-Type'] = 'application/json';
 		const response = await fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(data),
-			headers: {
-				'Content-Type': 'application/json'
-			}
+			headers: headers
 		});
 		const checkedResponse = await this._checkStatus(response);
 		return checkedResponse.json();
