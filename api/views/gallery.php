@@ -13,7 +13,7 @@
                             class="w-full h-auto object-cover" />
                         <!-- Show the number of likes -->
                         <div class="text-center">
-                            <i id="like-icon" class="bi bi-heart text-red-500"></i>
+                            <i class="like-icon bi bi-heart text-red-500"></i>
                             <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
                         </div>
                     </div>
