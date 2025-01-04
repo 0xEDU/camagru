@@ -2,10 +2,20 @@
 
 ## What is left to do:
 
-- [ ] Add breakpoints to the UI to make it mobile friendly
+- Password reinitialization
+- User preferences page
+- Add a secure user session system
 
-- [ ] Add Card for last taken picture (compenent will be shared with recently taken pics)
-- [ ] Login system - Needs more refinement
-- [ ] Improve infra, set front baseUrl dynamically
-- [ ] Fix Nginx size limitations
-- [ ] Handle gifs correctly
+- Add breakpoints to the UI to make it mobile friendly
+
+- Add upload of images to be edited
+- Make the snap button inactive if there aren't any superposables
+
+- Add likes and comments to images
+- Notificate comments by email, set a parameter to disable this
+- Add deletion of created images
+
+- Improve infra, set front baseUrl dynamically
+- Set php ini with nginx for mail configuration
+- Fix Nginx size limitations
+- Email configuration might be hard
