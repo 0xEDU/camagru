@@ -32,4 +32,12 @@ class ImageRepository {
 
 		return $this->pdo->lastInsertId();
 	}
+
+	public function getLikes($image_id) {
+		$sql = "SELECT likes FROM images WHERE image_id = :image_id";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([':image_id' => $image_id]);
+
+		return $stmt->fetch(PDO::FETCH_ASSOC);
+	}
 }

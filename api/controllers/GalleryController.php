@@ -21,13 +21,18 @@ class GalleryController
 		$page = isset($_GET['page']) ? $_GET['page'] : 1;
 		$perPage = 20;
 
-		$captures = $this->getCaptures();
+		$images = $this->getImages();
+		$captures = $images[0];
+		$likes = $images[1];
 
 		$totalCaptures = count($captures);
 		$captures = array_slice($captures, ($page - 1) * $perPage, $perPage);
 
 		$view = $page === 1 ? 'gallery' : 'captures';
-		$htmlContent = $this->loadView($view, ['captures' => $captures]);
+		$htmlContent = $this->loadView($view, [
+			'captures' => $captures,
+			'likes' => $likes
+		]);
 		header('Content-Type: application/json');
 		echo json_encode([
 			'data' => $htmlContent,
@@ -36,18 +41,21 @@ class GalleryController
 		]);
 	}
 
-	private function getCaptures()
+	private function getImages()
 	{
 		$capturesDir = __DIR__ . '/../imgs/captures';
 		$captures = [];
+		$likes = [];
 
 		$files = scandir($capturesDir);
 		foreach ($files as $file) {
 			if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
 				$captures[] = 'http://localhost:8042/imgs/captures/' . $file;
+				$id = explode('.', $file)[0];
+				$likes[] = $this->imageRepository->getLikes($id);
 			}
 		}
-		return $captures;
+		return [$captures, $likes];
 	}
 
 	private function loadView($view, $data = [])
