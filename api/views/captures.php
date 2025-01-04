@@ -13,7 +13,8 @@
                 </div>
                 <!-- Show the number of likes -->
                 <div class="text-center">
-                    <span class="text-sm text-gray-600">Likes: <?= $likes[$counter]['likes'] ?></span>
+                    <i id="like-icon" class="bi bi-heart text-red-500"></i>
+                    <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
                 </div>
                 <?php $counter++; ?>
             <?php endforeach; ?>
