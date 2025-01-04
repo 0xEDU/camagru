@@ -31,6 +31,9 @@ export default class LoginComponent {
 			return;
 		}
 
+		localStorage.setItem('username', username);
+		window.dispatchEvent(new Event('userLogged'));
+
 		this.loginForm.reset();
 
 		this._displaySuccessMessage();
