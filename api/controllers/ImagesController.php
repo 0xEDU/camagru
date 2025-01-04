@@ -2,6 +2,13 @@
 
 class ImagesController
 {
+	private $imageRepository;
+
+	public function __construct()
+	{
+		$this->imageRepository = new ImageRepository();
+	}
+
 	public function handleGetByIdRequest($id)
 	{
 		$imagePath = 'imgs/' . $id . '.png';
@@ -27,6 +34,8 @@ class ImagesController
 
 		$id = uniqid();
 		file_put_contents('imgs/captures/' . $id . '.png', $image);
+
+		$this->imageRepository->create(new Image($id));
 
 		header('Content-Type: application/json');
 		echo json_encode([
