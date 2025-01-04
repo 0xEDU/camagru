@@ -2,6 +2,13 @@
 
 class GalleryController
 {
+	private $imageRepository;
+
+	public function __construct()
+	{
+		$this->imageRepository = new ImageRepository();
+	}
+
 	public function handleRequest()
 	{
 		if ($_SERVER['REQUEST_METHOD'] === 'GET') {
