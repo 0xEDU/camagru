@@ -6,3 +6,22 @@ CREATE TABLE IF NOT EXISTS users (
     token VARCHAR(255),
     is_active BOOLEAN DEFAULT FALSE
 );
+
+CREATE TABLE IF NOT EXISTS images (
+    id SERIAL PRIMARY KEY,
+    image_id VARCHAR(255) NOT NULL UNIQUE,
+    likes INT DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS comments (
+    id SERIAL PRIMARY KEY,
+    image_id VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS likes (
+    id SERIAL PRIMARY KEY,
+    image_id VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL
+)
