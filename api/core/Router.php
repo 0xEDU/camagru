@@ -9,6 +9,7 @@ class Router
 			'#^/images/(\w+)$#' => ['controller' => 'ImagesController', 'method' => 'handleGetByIdRequest'],
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handleGetRequest'],
 			'#^/superposables$#' => ['controller' => 'ImagesController', 'method' => 'handleGetSuperposablesRequest'],
+			'#^/gallery/likes$#' => ['controller' => 'GalleryController', 'method' => 'handleGetLikesRequest'],
 			'#^/gallery$#' => ['controller' => 'GalleryController', 'method' => 'handleRequest'],
 			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handleRequest'],
 			'#^/confirm$#' => ['controller' => 'RegisterController', 'method' => 'handleConfirmationRequest'],

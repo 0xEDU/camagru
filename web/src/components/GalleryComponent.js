@@ -14,8 +14,18 @@ export default class GalleryComponent {
 	async initialize() {
 		this.galleryLoading.style.display = 'none';
 		window.addEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
-		for (const item of this.galleryGrid.firstElementChild.children) {
-			item.querySelector('.like-icon').addEventListener('click', this._handleLike.bind(this));
+		const response = await this.galleryService.fetchUserLikes();
+		if (!(response instanceof Error)) {
+			const userLikes = response.likes;
+			for (const item of this.galleryGrid.firstElementChild.children) {
+				const id = item.firstElementChild.src.split('.')[0].split('/')[5];
+				if (userLikes.includes(id)) {
+					item.querySelector('.like-icon').classList.add('liked');
+					item.querySelector('.like-icon').classList.remove('bi-heart');
+					item.querySelector('.like-icon').classList.add('bi-heart-fill');
+				}
+				item.addEventListener('click', this._handleLike.bind(this));
+			}
 		}
 	}
 

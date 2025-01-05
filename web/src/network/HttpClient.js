@@ -3,9 +3,12 @@ class HttpClient {
 		this.baseUrl = baseUrl;
 	}
 
-	async get(endpoint) {
+	async get(endpoint, headers = {}) {
 		const url = `${this.baseUrl}${endpoint}`;
-		const response = await fetch(url);
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: headers
+		});
 		const checkedResponse = await this._checkStatus(response);
 		return checkedResponse.json();
 	}

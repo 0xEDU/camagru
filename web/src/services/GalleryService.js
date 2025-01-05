@@ -8,14 +8,25 @@ export default class GalleryService {
 	}
 
 	async addLike(id) {
+		const username = localStorage.getItem('username');
 		return await this.httpClient.post(`/gallery/${id}/like`, {}, {
-			'operation': 'add'
+			'operation': 'add',
+			'username': username
 		});
 	}
 
 	async deleteLike(id) {
+		const username = localStorage.getItem('username');
 		return await this.httpClient.post(`/gallery/${id}/like`, {}, {
-			'operation': 'remove'
+			'operation': 'remove',
+			'username': username
+		});
+	}
+
+	async fetchUserLikes() {
+		const username = localStorage.getItem('username');
+		return await this.httpClient.get('/gallery/likes',{
+			'username': username
 		});
 	}
 }

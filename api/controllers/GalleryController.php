@@ -3,10 +3,12 @@
 class GalleryController
 {
 	private $imageRepository;
+	private $likeRepository;
 
 	public function __construct()
 	{
 		$this->imageRepository = new ImageRepository();
+		$this->likeRepository = new LikeRepository();
 	}
 
 	public function handleRequest()
@@ -69,16 +71,33 @@ class GalleryController
 	public function handlePostRequest($id)
 	{
 		$operation = $_SERVER['HTTP_OPERATION'];
-		if ($operation !== 'add' && $operation !== 'remove') {
+		$username = $_SERVER['HTTP_USERNAME'];
+		if ($operation !== 'add' && $operation !== 'remove' || !$username) {
 			http_response_code(400);
 			echo json_encode(['error' => 'Invalid operation.']);
 			return;
 		} else if ($operation === 'add') {
+			$this->likeRepository->create($id, $username);
 			$likes = $this->imageRepository->incrementLike($id);
 			echo json_encode(['likes' => $likes]);
 		} else {
+			$this->likeRepository->delete($id, $username);
 			$likes = $this->imageRepository->decrementLike($id);
 			echo json_encode(['likes' => $likes]);
 		}
+	}
+
+	public function handleGetLikesRequest() {
+		$username = $_SERVER['HTTP_USERNAME'];
+		if (!$username) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid username.']);
+			return;
+		}
+		$likes = $this->likeRepository->getLikesFromUsername($username);
+		$likes = array_map(function ($like) {
+			return $like['image_id'];
+		}, $likes);
+		echo json_encode(['likes' => $likes]);
 	}
 }
