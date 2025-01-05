@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS images (
 CREATE TABLE IF NOT EXISTS comments (
     id SERIAL PRIMARY KEY,
     image_id VARCHAR(255) NOT NULL,
-    user_id INT NOT NULL,
+    username INT NOT NULL,
     comment TEXT NOT NULL
 );
 
