@@ -11,7 +11,7 @@
 - Add upload of images to be edited
 - Make the snap button inactive if there aren't any superposables
 
-- Add likes and comments to images
+- Add comments to images
 - Notificate comments by email, set a parameter to disable this
 - Add deletion of created images
 
