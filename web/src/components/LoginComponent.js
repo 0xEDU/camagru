@@ -37,6 +37,8 @@ export default class LoginComponent {
 		this.loginForm.reset();
 
 		this._displaySuccessMessage();
+
+		window.location.reload();
     }
 
 	_displaySuccessMessage() {
