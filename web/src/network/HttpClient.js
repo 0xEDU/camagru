@@ -7,7 +7,8 @@ class HttpClient {
 		const url = `${this.baseUrl}${endpoint}`;
 		const response = await fetch(url, {
 			method: 'GET',
-			headers: headers
+			headers: headers,
+			credentials: 'include'
 		});
 		const checkedResponse = await this._checkStatus(response);
 		return checkedResponse.json();
@@ -19,7 +20,8 @@ class HttpClient {
 		const response = await fetch(url, {
 			method: 'POST',
 			body: JSON.stringify(data),
-			headers: headers
+			headers: headers,
+			credentials: 'include'
 		});
 		const checkedResponse = await this._checkStatus(response);
 		return checkedResponse.json();
@@ -29,7 +31,8 @@ class HttpClient {
 		const url = `${this.baseUrl}${endpoint}`;
 		const response = await fetch(url, {
 			method: 'DELETE',
-			headers: headers
+			headers: headers,
+			credentials: 'include'
 		});
 		const checkedResponse = await this._checkStatus(response);
 		return checkedResponse.json();
@@ -41,7 +44,8 @@ class HttpClient {
 		const response = await fetch(url, {
 			method: 'PUT',
 			body: JSON.stringify(data),
-			headers: headers
+			headers: headers,
+			credentials: 'include'
 		});
 		const checkedResponse = await this._checkStatus(response);
 		return checkedResponse.json();

@@ -1,6 +1,7 @@
 class MenuComponent {
-	constructor(router) {
+	constructor(router, menuService) {
 		this.router = router;
+		this.menuService = menuService;
 
 		this.galleryButton = document.getElementById('gallery-button');
 		this.homeButton = document.getElementById('home-button');
@@ -37,7 +38,8 @@ class MenuComponent {
 		this.router.navigateTo('/login');
 	}
 
-	_handleLogoutClick() {
+	async _handleLogoutClick() {
+		await this.menuService.handleLogout();
 		localStorage.removeItem('username');
 		location.reload();
 	}

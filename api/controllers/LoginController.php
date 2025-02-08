@@ -23,6 +23,17 @@ class LoginController {
 	}
 
 	public function handlePostRequest() {
+		session_set_cookie_params([
+			'lifetime' => 86400 * 30, // 30 days
+			'path' => '/',
+			'domain' => 'localhost',
+			'secure' => false,
+			'httponly' => true,
+			'samesite' => 'None'
+		]);
+
+		session_start();
+
 		$data = json_decode(file_get_contents('php://input'), true);
 
 		$username = $data['username'];
@@ -49,6 +60,10 @@ class LoginController {
 		$user = $this->userRepository->getUserByUsername($username);
 
 		if ($user && $user['is_active'] && password_verify($password, $user['password'])) {
+			session_regenerate_id(true);
+
+			$_SESSION['user'] = $user['username'];
+
 			http_response_code(200);
 			echo json_encode([
 				'success' => 'User logged.',
@@ -58,5 +73,16 @@ class LoginController {
 			http_response_code(401);
 			echo json_encode(['error' => 'Invalid username or password.']);
 		}
+	}
+
+	public function handleLogoutRequest() {
+		session_start();
+		$_SESSION = [];
+		session_destroy();
+
+		setcookie(session_name(), '', time() - 3600, '/');
+
+		http_response_code(200);
+		echo json_encode(['success' => 'User logged out.']);
 	}
 }

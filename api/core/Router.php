@@ -22,6 +22,7 @@ class Router
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
 			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handlePostRequest'],
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handlePostRequest'],
+			'#^/logout$#' => ['controller' => 'LoginController', 'method' => 'handleLogoutRequest'],
 			'#^/gallery/(\w+)/like$#' => ['controller' => 'GalleryController', 'method' => 'handlePostRequest'],
 			'#^/gallery/(\w+)/comments$#' => ['controller' => 'GalleryController', 'method' => 'handleAddCommentRequest'],
 		],
