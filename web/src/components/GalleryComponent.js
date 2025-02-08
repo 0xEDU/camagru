@@ -2,6 +2,7 @@ import insertElement from '../libs/tinyDOM/insertElement';
 
 export default class GalleryComponent {
 	constructor(galleryService) {
+		this.currentImageId = null;
 		this.galleryService = galleryService;
 
 		this.galleryGrid = document.getElementById('gallery-grid');
@@ -9,6 +10,9 @@ export default class GalleryComponent {
 		this.modalBackdrop = document.getElementById('modal-backdrop');
 		this.openModalButton = document.getElementById('comments-button');
 		this.closeModalButton = document.getElementById('close-modal');
+		this.commentsBody = document.getElementById('comments-body');
+		this.addCommentButton = document.getElementById('add-comment-button');
+		this.modalAlert = document.getElementById('modal-alert');
 
 		this.currentPage = 1;
 		this.hasMore = true;
@@ -27,17 +31,17 @@ export default class GalleryComponent {
 					item.querySelector('.like-icon').classList.remove('bi-heart');
 					item.querySelector('.like-icon').classList.add('bi-heart-fill');
 				}
+				item.imageId = id;
 				item.addEventListener('click', this._handleIconClick.bind(this));
 			}
 		}
-		this.openModalButton.addEventListener('click', this.showModal.bind(this));
 		this.closeModalButton.addEventListener('click', this.hideModal.bind(this));
 		this.modalBackdrop.addEventListener('click', this.backdrop.bind(this));
+		this.addCommentButton.addEventListener('click', this.handleAddComment.bind(this));
 	}
 
 	destroy() {
 		window.removeEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
-		this.openModalButton.removeEventListener('click', this.showModal.bind(this));
 		this.closeModalButton.removeEventListener('click', this.hideModal.bind(this));
 		this.modalBackdrop.removeEventListener('click', this.backdrop.bind(this));
 	}
@@ -81,6 +85,9 @@ export default class GalleryComponent {
 				}
 				break;
 			}
+			case event.target.classList.contains('comments-icon'): {
+				this.showModal(event);
+			}
 		}
 	}
 
@@ -104,19 +111,39 @@ export default class GalleryComponent {
 		insertElement(this.galleryGrid.id, captures)
 	}
 
-	showModal() {
+	async showModal(event) {
 		this.modalBackdrop.classList.remove('hidden');
 		document.body.classList.add('overflow-hidden');
+
+		const id = event.target.parentElement.parentElement.firstElementChild.src.split('.')[0].split('/')[5];
+		this.currentImageId = id;
+		const response = await this.galleryService.fetchComments(id);
+		insertElement(this.commentsBody.id, response.data);
 	}
 
 	hideModal() {
+		this.currentImageId = null;
 		this.modalBackdrop.classList.add('hidden');
 		document.body.classList.remove('overflow-hidden');
+		this.commentsBody.innerHTML = '';
 	}
 
 	backdrop(event) {
 		if (event.target === this.modalBackdrop) {
 			this.hideModal();
+		}
+	}
+
+	async handleAddComment(event) {
+		const comment = event.target.previousElementSibling.value;
+		try {
+			this.modalAlert.innerText = '';
+			const response = await this.galleryService.addComment(this.currentImageId, comment);
+			this.commentsBody.innerHTML = '';
+			insertElement(this.commentsBody.id, response.data);
+			event.target.previousElementSibling.value = '';
+		} catch(error) {
+			this.modalAlert.innerText = error;
 		}
 	}
 }

@@ -51,5 +51,14 @@
             <!-- Modal Body -->
             <div id="comments-body" class="mb-4">
             </div>
+
+            <!-- Modal Footer -->
+            <div class="flex justify-between items-center">
+                <input id="comment-input" type="text" class="w-full mr-1 p-2 border rounded-md" placeholder="Add a comment..." />
+                <button id="add-comment-button" class="px-4 py-2 bg-color-secondary text-black rounded-lg">Add</button>
+            </div>
+
+            <!-- Alerts -->
+            <div id="modal-alert" class="mt-4 text-red-500"></div>
         </div>
     </div>

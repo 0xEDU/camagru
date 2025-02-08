@@ -14,12 +14,14 @@ class Router
 			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handleRequest'],
 			'#^/confirm$#' => ['controller' => 'RegisterController', 'method' => 'handleConfirmationRequest'],
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handleGetRequest'],
+			'#^/gallery/(\w+)/comments$#' => ['controller' => 'GalleryController', 'method' => 'handleGetCommentsRequest'],
 		],
 		'POST' => [
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
 			'#^/register$#' => ['controller' => 'RegisterController', 'method' => 'handlePostRequest'],
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handlePostRequest'],
 			'#^/gallery/(\w+)/like$#' => ['controller' => 'GalleryController', 'method' => 'handlePostRequest'],
+			'#^/gallery/(\w+)/comments$#' => ['controller' => 'GalleryController', 'method' => 'handleAddCommentRequest'],
 		],
 		'DELETE' => [
 			'#^/gallery/(\w+)$#' => ['controller' => 'GalleryController', 'method' => 'handleDeleteRequest'],

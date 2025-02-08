@@ -4,11 +4,13 @@ class GalleryController
 {
 	private $imageRepository;
 	private $likeRepository;
+	private $commentsRepository;
 
 	public function __construct()
 	{
 		$this->imageRepository = new ImageRepository();
 		$this->likeRepository = new LikeRepository();
+		$this->commentsRepository = new CommentsRepository();
 	}
 
 	public function handleRequest()
@@ -105,11 +107,56 @@ class GalleryController
 	{
 		$this->imageRepository->delete($id);
 		$this->likeRepository->deleteAll($id);
+		$this->commentsRepository->deleteAll($id);
 		$filename = __DIR__ . '/../imgs/captures/' . $id . '.png';
 		if (file_exists($filename)) {
 			unlink($filename);
 		}
 		http_response_code(200);
 		echo json_encode(['success' => 'Capture deleted.']);
+	}
+
+	// Get comments function
+    // public function getComments($image_id) {
+    //     $sql = "SELECT username, comment FROM comments WHERE image_id = :image_id";
+    //     $stmt = $this->pdo->prepare($sql);
+    //     $stmt->execute([':image_id' => $image_id]);
+
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }
+	
+	public function handleGetCommentsRequest($id)
+	{
+		$comments = $this->commentsRepository->getComments($id);
+		
+		$htmlContent = $this->loadView('comments', [
+			'comments' => $comments
+		]);
+		echo json_encode(['data' => $htmlContent]);
+	}
+
+	public function handleAddCommentRequest($id)
+	{
+		$data = json_decode(file_get_contents('php://input'), true);
+		$username = $data['username'] ?? '';
+		$comment = $data['comment'] ?? '';
+
+		$commentRegex = '/^[\w\s!@#$%^&*()-+=~]+$/';
+		
+
+		if (!preg_match($commentRegex, $comment) || strlen($comment) > 255) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid comment.']);
+			return;
+		}
+
+		$comment = htmlspecialchars($comment, ENT_QUOTES, 'UTF-8');
+
+		$this->commentsRepository->create($id, $username, $comment);
+		$comments = $this->commentsRepository->getComments($id);
+		$htmlContent = $this->loadView('comments', [
+			'comments' => $comments
+		]);
+		echo json_encode(['data' => $htmlContent]);
 	}
 }

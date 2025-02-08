@@ -33,4 +33,15 @@ export default class GalleryService {
 	async deleteImage(id) {
 		return await this.httpClient.delete(`/gallery/${id}`);
 	}
+
+	async fetchComments(id) {
+		return await this.httpClient.get(`/gallery/${id}/comments`);
+	}
+
+	async addComment(id, comment) {
+		return await this.httpClient.post(`/gallery/${id}/comments`, {
+			'username': localStorage.getItem('username'),
+			'comment': comment
+		});
+	}
 }
