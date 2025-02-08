@@ -15,6 +15,7 @@ class Router
 			'#^/confirm$#' => ['controller' => 'RegisterController', 'method' => 'handleConfirmationRequest'],
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handleGetRequest'],
 			'#^/gallery/(\w+)/comments$#' => ['controller' => 'GalleryController', 'method' => 'handleGetCommentsRequest'],
+			'#^/settings$#' => ['controller' => 'SettingsController', 'method' => 'handleGetRequest'],
 		],
 		'POST' => [
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],

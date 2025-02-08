@@ -8,6 +8,8 @@ import RegisterService from "../services/RegisterService";
 import RegisterComponent from "../components/RegisterComponent";
 import LoginService from "../services/LoginService";
 import LoginComponent from "../components/LoginComponent";
+import SettingsService from "../services/SettingsService";
+import SettingsComponent from "../components/SettingsComponent";
 
 const routes = [
 	{
@@ -68,6 +70,19 @@ const routes = [
 			this.components.forEach(component => component.destroy());
 		}
 	},
+	{
+		path: '/settings',
+		async initialize(httpClient) {
+			this.components = [];
+
+			const settingsService = new SettingsService(httpClient);
+			const settingsComponent = new SettingsComponent(settingsService);
+			await settingsComponent.initialize();
+		},
+		destroy() {
+			this.components.forEach(component => component.destroy());
+		}
+	}
 ]
 
 export default routes;
