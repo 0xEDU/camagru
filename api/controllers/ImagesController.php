@@ -27,6 +27,7 @@ class ImagesController
 		$rawData = file_get_contents('php://input');
 		$data = json_decode($rawData, true);
 
+		$username = $data['username'];
 		$image = $data['image'];
 		list($type, $image) = explode(';', $image);
 		list(, $image) = explode(',', $image);
@@ -35,7 +36,7 @@ class ImagesController
 		$id = uniqid();
 		file_put_contents('imgs/captures/' . $id . '.png', $image);
 
-		$this->imageRepository->create(new Image($id));
+		$this->imageRepository->create(new Image($id, $username));
 
 		header('Content-Type: application/json');
 		echo json_encode([

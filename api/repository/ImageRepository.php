@@ -23,11 +23,12 @@ class ImageRepository {
     }
 
 	public function create($image) {
-		$sql = "INSERT INTO images (image_id) VALUES (:image_id)";
+		$sql = "INSERT INTO images (image_id, username) VALUES (:image_id, :username)";
 		$stmt = $this->pdo->prepare($sql);
 
 		$stmt->execute([
-			':image_id' => $image->image_id
+			':image_id' => $image->image_id,
+			':username' => $image->username
 		]);
 
 		return $this->pdo->lastInsertId();

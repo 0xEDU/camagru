@@ -13,7 +13,10 @@ class CameraService {
     }
 
     async saveEncodedImage(encodedImage) {
-        const body = { "image": encodedImage };
+        const body = { 
+            "image": encodedImage,
+            "username": localStorage.getItem('username')
+        };
         const response = await this.httpClient.post('/images', body);
         return response.data.id;
     }
