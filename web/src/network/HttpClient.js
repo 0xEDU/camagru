@@ -35,6 +35,18 @@ class HttpClient {
 		return checkedResponse.json();
 	}
 
+	async put(endpoint, data, headers = {}) {
+		const url = `${this.baseUrl}${endpoint}`;
+		headers['Content-Type'] = 'application/json';
+		const response = await fetch(url, {
+			method: 'PUT',
+			body: JSON.stringify(data),
+			headers: headers
+		});
+		const checkedResponse = await this._checkStatus(response);
+		return checkedResponse.json();
+	}
+
 	async _checkStatus(response) {
 		if (!response.ok) {
 			const errorBody = await response.text();

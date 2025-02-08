@@ -16,6 +16,7 @@ class Router
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handleGetRequest'],
 			'#^/gallery/(\w+)/comments$#' => ['controller' => 'GalleryController', 'method' => 'handleGetCommentsRequest'],
 			'#^/settings$#' => ['controller' => 'SettingsController', 'method' => 'handleGetRequest'],
+			'#^/settings/(\w+)/receive-emails$#' => ['controller' => 'SettingsController', 'method' => 'handleGetEmailNotifcationRequest'],
 		],
 		'POST' => [
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handlePostRequest'],
@@ -27,6 +28,9 @@ class Router
 		'DELETE' => [
 			'#^/gallery/(\w+)$#' => ['controller' => 'GalleryController', 'method' => 'handleDeleteRequest'],
 		],
+		'PUT' => [
+			'#^/settings/(\w+)/receive-emails$#' => ['controller' => 'SettingsController', 'method' => 'handlePutRequest'],
+		]
 	];
 
 	public function route()

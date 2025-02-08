@@ -64,4 +64,10 @@ class UserRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':id' => $id]);
     }
+
+    public function updateReceiveEmail($username, $receiveEmail) {
+        $sql = "UPDATE users SET receive_email = :receive_email WHERE username = :username";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':username' => $username, ':receive_email' => $receiveEmail]);
+    }
 }

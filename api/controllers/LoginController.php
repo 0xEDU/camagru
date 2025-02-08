@@ -50,7 +50,10 @@ class LoginController {
 
 		if ($user && $user['is_active'] && password_verify($password, $user['password'])) {
 			http_response_code(200);
-			echo json_encode(['success' => 'User logged.']);
+			echo json_encode([
+				'success' => 'User logged.',
+				'email' => $user['email']
+			]);
 		} else {
 			http_response_code(401);
 			echo json_encode(['error' => 'Invalid username or password.']);

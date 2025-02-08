@@ -2,4 +2,12 @@ export default class SettingsService {
     constructor(httpClient) {
         this.httpClient = httpClient;
     }
+
+    async getEmailNotifications(username) {
+        return await this.httpClient.get(`/settings/${username}/receive-emails`);
+    }
+
+    async updateEmailNotifications(username, receiveEmail) {
+        return await this.httpClient.put(`/settings/${username}/receive-emails`, { 'receive_email': receiveEmail.toString() });
+    }
 }
