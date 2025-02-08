@@ -32,6 +32,7 @@ export default class LoginComponent {
 		}
 
 		localStorage.setItem('username', username);
+		localStorage.setItem('email', response.email);
 		window.dispatchEvent(new Event('userLogged'));
 
 		this.loginForm.reset();
