@@ -17,6 +17,7 @@
                                 <i class="like-icon bi bi-heart text-red-500"></i>
                                 <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
                             </div>
+                            <i id="comments-button" class="comments-icon bi bi-chat text-blue-500"></i>
                             <i class="delete-icon bi bi-trash3-fill text-red-700"></i>
                         </div>
                     </div>
@@ -35,3 +36,20 @@
         <span class="sr-only">Loading...</span>
     </article>
 </section>
+
+<div id="modal-backdrop" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+        <!-- Modal Content -->
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold">Comments</h3>
+                <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div id="comments-body" class="mb-4">
+            </div>
+        </div>
+    </div>

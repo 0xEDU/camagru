@@ -17,6 +17,7 @@
                         <i class="like-icon bi bi-heart text-red-500"></i>
                         <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
                     </div>
+                    <i class="comments-icon bi bi-chat text-blue-500"></i>
                     <i class="delete-icon bi bi-trash3-fill text-red-700"></i>
                 </div>
                 <?php $counter++; ?>

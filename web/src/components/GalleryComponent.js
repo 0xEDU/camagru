@@ -6,6 +6,9 @@ export default class GalleryComponent {
 
 		this.galleryGrid = document.getElementById('gallery-grid');
 		this.galleryLoading = document.getElementById('gallery-loading');
+		this.modalBackdrop = document.getElementById('modal-backdrop');
+		this.openModalButton = document.getElementById('comments-button');
+		this.closeModalButton = document.getElementById('close-modal');
 
 		this.currentPage = 1;
 		this.hasMore = true;
@@ -27,10 +30,16 @@ export default class GalleryComponent {
 				item.addEventListener('click', this._handleIconClick.bind(this));
 			}
 		}
+		this.openModalButton.addEventListener('click', this.showModal.bind(this));
+		this.closeModalButton.addEventListener('click', this.hideModal.bind(this));
+		this.modalBackdrop.addEventListener('click', this.backdrop.bind(this));
 	}
 
 	destroy() {
 		window.removeEventListener('scroll', this._debounce(this._handleScroll.bind(this), 200).bind(this));
+		this.openModalButton.removeEventListener('click', this.showModal.bind(this));
+		this.closeModalButton.removeEventListener('click', this.hideModal.bind(this));
+		this.modalBackdrop.removeEventListener('click', this.backdrop.bind(this));
 	}
 
 	_debounce(func, delay) {
@@ -93,5 +102,21 @@ export default class GalleryComponent {
 		const captures = response.data;
 		this.hasMore = response.hasMore;
 		insertElement(this.galleryGrid.id, captures)
+	}
+
+	showModal() {
+		this.modalBackdrop.classList.remove('hidden');
+		document.body.classList.add('overflow-hidden');
+	}
+
+	hideModal() {
+		this.modalBackdrop.classList.add('hidden');
+		document.body.classList.remove('overflow-hidden');
+	}
+
+	backdrop(event) {
+		if (event.target === this.modalBackdrop) {
+			this.hideModal();
+		}
 	}
 }
