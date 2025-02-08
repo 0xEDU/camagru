@@ -56,4 +56,10 @@ class ImageRepository {
 
 		return $this->getLikes($image_id)['likes'];
 	}
+
+	public function delete($image_id) {
+		$sql = "DELETE FROM images WHERE image_id = :image_id";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([':image_id' => $image_id]);
+	}
 }

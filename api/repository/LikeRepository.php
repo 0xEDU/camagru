@@ -40,6 +40,17 @@ class LikeRepository {
 		return $stmt->rowCount();
 	}
 
+	public function deleteALl($image_id) {
+		$sql = "DELETE FROM likes WHERE image_id = :image_id";
+		$stmt = $this->pdo->prepare($sql);
+
+		$stmt->execute([
+			':image_id' => $image_id
+		]);
+
+		return $stmt->rowCount();
+	}
+
 	public function getLikesFromUsername($username) {
 		$sql = "SELECT image_id FROM likes WHERE username = :username";
 		$stmt = $this->pdo->prepare($sql);

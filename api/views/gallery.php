@@ -12,9 +12,12 @@
                             alt="Gallery Image"
                             class="w-full h-auto object-cover" />
                         <!-- Show the number of likes -->
-                        <div class="text-center">
-                            <i class="like-icon bi bi-heart text-red-500"></i>
-                            <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
+                        <div class="text-center flex justify-around">
+                            <div>
+                                <i class="like-icon bi bi-heart text-red-500"></i>
+                                <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
+                            </div>
+                            <i class="delete-icon bi bi-trash3-fill text-red-700"></i>
                         </div>
                     </div>
                     <?php $counter++; ?>

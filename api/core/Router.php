@@ -21,6 +21,9 @@ class Router
 			'#^/login$#' => ['controller' => 'LoginController', 'method' => 'handlePostRequest'],
 			'#^/gallery/(\w+)/like$#' => ['controller' => 'GalleryController', 'method' => 'handlePostRequest'],
 		],
+		'DELETE' => [
+			'#^/gallery/(\w+)$#' => ['controller' => 'GalleryController', 'method' => 'handleDeleteRequest'],
+		],
 	];
 
 	public function route()

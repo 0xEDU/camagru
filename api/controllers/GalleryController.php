@@ -100,4 +100,16 @@ class GalleryController
 		}, $likes);
 		echo json_encode(['likes' => $likes]);
 	}
+
+	public function handleDeleteRequest($id)
+	{
+		$this->imageRepository->delete($id);
+		$this->likeRepository->deleteAll($id);
+		$filename = __DIR__ . '/../imgs/captures/' . $id . '.png';
+		if (file_exists($filename)) {
+			unlink($filename);
+		}
+		http_response_code(200);
+		echo json_encode(['success' => 'Capture deleted.']);
+	}
 }

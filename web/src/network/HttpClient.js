@@ -25,6 +25,16 @@ class HttpClient {
 		return checkedResponse.json();
 	}
 
+	async delete(endpoint, headers = {}) {
+		const url = `${this.baseUrl}${endpoint}`;
+		const response = await fetch(url, {
+			method: 'DELETE',
+			headers: headers
+		});
+		const checkedResponse = await this._checkStatus(response);
+		return checkedResponse.json();
+	}
+
 	async _checkStatus(response) {
 		if (!response.ok) {
 			const errorBody = await response.text();

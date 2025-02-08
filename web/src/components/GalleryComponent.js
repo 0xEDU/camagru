@@ -24,7 +24,7 @@ export default class GalleryComponent {
 					item.querySelector('.like-icon').classList.remove('bi-heart');
 					item.querySelector('.like-icon').classList.add('bi-heart-fill');
 				}
-				item.addEventListener('click', this._handleLike.bind(this));
+				item.addEventListener('click', this._handleIconClick.bind(this));
 			}
 		}
 	}
@@ -40,22 +40,38 @@ export default class GalleryComponent {
 		};
 	}
 
-	async _handleLike(event) {
-		const id = event.target.parentElement.parentElement.firstElementChild.src.split('.')[0].split('/')[5] 
-		let response;
-		if (event.target.classList.contains('liked')) {
-			event.target.classList.remove('liked');
-			event.target.classList.add('bi-heart');
-			event.target.classList.remove('bi-heart-fill');
-			response = await this.galleryService.deleteLike(id);
-		} else {
-			event.target.classList.add('liked');
-			event.target.classList.remove('bi-heart');
-			event.target.classList.add('bi-heart-fill');
-			response = await this.galleryService.addLike(id);
-		}
-		if (!(response instanceof Error)) {
-			event.target.nextElementSibling.innerText = response.likes;
+	async _handleIconClick(event) {
+		switch (true) {
+			case event.target.classList.contains('like-icon'): {
+				const id = event.target.parentElement.parentElement.parentElement.firstElementChild.src.split('.')[0].split('/')[5];
+				let response;
+				if (event.target.classList.contains('liked')) {
+					event.target.classList.remove('liked');
+					event.target.classList.add('bi-heart');
+					event.target.classList.remove('bi-heart-fill');
+					response = await this.galleryService.deleteLike(id);
+				} else {
+					event.target.classList.add('liked');
+					event.target.classList.remove('bi-heart');
+					event.target.classList.add('bi-heart-fill');
+					response = await this.galleryService.addLike(id);
+				}
+				if (!(response instanceof Error)) {
+					event.target.nextElementSibling.innerText = response.likes;
+				}
+				break;
+			}
+			case event.target.classList.contains('delete-icon'): {
+				const id = event.target.parentElement.parentElement.firstElementChild.src.split('.')[0].split('/')[5];
+				const response = await this.galleryService.deleteImage(id);
+				if (!(response instanceof Error)) {
+					event.target.parentElement.parentElement.remove();
+				}
+				if (this.galleryGrid.firstElementChild.children.length === 0) {
+					this.galleryGrid.innerHTML = '<p class="text-center text-gray-500">No images found in the gallery.</p>';
+				}
+				break;
+			}
 		}
 	}
 

@@ -29,4 +29,8 @@ export default class GalleryService {
 			'username': username
 		});
 	}
+
+	async deleteImage(id) {
+		return await this.httpClient.delete(`/gallery/${id}`);
+	}
 }
