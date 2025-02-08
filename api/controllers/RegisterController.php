@@ -109,5 +109,8 @@ class RegisterController
 			return;
 		}
 		$this->userRepository->confirmUser($user['id']);
+		// You can close this window now
+		http_response_code(200);
+		echo 'Your account has been confirmed, you can close this window now!';
 	}
 }
