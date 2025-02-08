@@ -73,12 +73,12 @@ export default class RegisterComponent {
 		this._displaySuccessMessage();
 		setTimeout(() => {
 			window.location.reload();
-		}, 2000);
+		}, 2500);
 			
 	}
 
 	_displaySuccessMessage() {
-		this.formMessage.innerHTML = 'Registered successfully!';
+		this.formMessage.innerHTML = 'Registered successfully, check your email!';
 		this.formMessage.style.color = 'green';
 	}
 
