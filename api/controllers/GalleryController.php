@@ -115,15 +115,6 @@ class GalleryController
 		http_response_code(200);
 		echo json_encode(['success' => 'Capture deleted.']);
 	}
-
-	// Get comments function
-    // public function getComments($image_id) {
-    //     $sql = "SELECT username, comment FROM comments WHERE image_id = :image_id";
-    //     $stmt = $this->pdo->prepare($sql);
-    //     $stmt->execute([':image_id' => $image_id]);
-
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
 	
 	public function handleGetCommentsRequest($id)
 	{
