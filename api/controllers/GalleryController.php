@@ -8,6 +8,7 @@ class GalleryController
 
 	public function __construct()
 	{
+		$this->userRepository = new UserRepository();
 		$this->imageRepository = new ImageRepository();
 		$this->likeRepository = new LikeRepository();
 		$this->commentsRepository = new CommentsRepository();
@@ -149,5 +150,13 @@ class GalleryController
 			'comments' => $comments
 		]);
 		echo json_encode(['data' => $htmlContent]);
+		$owner = $this->imageRepository->getUsernameById($id);
+		$user = $this->userRepository->getUserByUsername($owner['username']);
+		if ($user && $user['receive_email']) {
+			$to = $user['email'];
+			$subject = 'New comment on your capture';
+			$message = 'Hi ' . $owner . ', your capture has a new comment: ' . $comment;
+			mail($to, $subject, $message);
+		}
 	}
 }
