@@ -47,6 +47,9 @@ class Router
 
 		foreach ($this->routes[$requestMethod] as $pattern => $route) {
 			if (preg_match($pattern, $requestUri, $matches)) {
+				if (isset($route['auth']) && $route['auth'] === true) {
+					$this->checkAuth();
+				}
 				$controllerName = $route['controller'];
 				$method = $route['method'];
 
@@ -58,6 +61,15 @@ class Router
 					return;
 				}
 			}
+		}
+	}
+
+	private function checkAuth()
+	{
+		if (!isset($_SESSION['user'])) {
+			http_response_code(401);
+			echo json_encode(['error' => 'Unauthorized']);
+			exit;
 		}
 	}
 }
