@@ -76,7 +76,6 @@ class LoginController {
 	}
 
 	public function handleLogoutRequest() {
-		session_start();
 		$_SESSION = [];
 		session_destroy();
 
