@@ -5,7 +5,6 @@
 - Password reinitialization
 - Change username (everywhere in db)
 - Change email (also everywhere, but it's used less often)
-- On/Off email notifications
 - Add a secure user session system
 - Users shouldn't be able to delete images that aren't theirs
 
