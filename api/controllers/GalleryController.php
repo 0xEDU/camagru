@@ -106,6 +106,12 @@ class GalleryController
 
 	public function handleDeleteRequest($id)
 	{
+		$image = $this->imageRepository->getByImageId($id);
+		if (isset($_SESSION['user']) && $_SESSION['user'] !== $image['username']) {
+			http_response_code(403);
+			echo json_encode(['error' => 'Unauthorized.']);
+			return;
+		}
 		$this->imageRepository->delete($id);
 		$this->likeRepository->deleteAll($id);
 		$this->commentsRepository->deleteAll($id);
