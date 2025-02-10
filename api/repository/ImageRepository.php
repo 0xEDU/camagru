@@ -34,6 +34,15 @@ class ImageRepository {
 		return $this->pdo->lastInsertId();
 	}
 
+	public function getAll() {
+		$sql = "SELECT * FROM images";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+
 	public function getLikes($image_id) {
 		$sql = "SELECT likes FROM images WHERE image_id = :image_id";
 		$stmt = $this->pdo->prepare($sql);

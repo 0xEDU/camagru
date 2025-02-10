@@ -48,17 +48,17 @@ class GalleryController
 
 	private function getImages()
 	{
-		$capturesDir = __DIR__ . '/../imgs/captures';
 		$captures = [];
 		$likes = [];
 
-		$files = scandir($capturesDir);
-		foreach ($files as $file) {
-			if (in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif'])) {
-				$captures[] = 'http://localhost:8042/imgs/captures/' . $file;
-				$id = explode('.', $file)[0];
-				$likes[] = $this->imageRepository->getLikes($id);
-			}
+		$images = $this->imageRepository->getAll();
+
+		foreach ($images as $image) {
+			$captures[] = [
+				'url' => 'http://localhost:8042/imgs/captures/' . $image['image_id'] . '.png',
+				'username' => $image['username']
+			];
+			$likes[] = $image['likes'];
 		}
 		return [$captures, $likes];
 	}

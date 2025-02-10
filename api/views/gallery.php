@@ -8,19 +8,23 @@
                 ?>
                     <div class="overflow-hidden rounded-lg shadow-lg">
                         <img
-                            src="<?= htmlspecialchars($capture, ENT_QUOTES, 'UTF-8') ?>"
+                            src="<?= htmlspecialchars($capture['url'], ENT_QUOTES, 'UTF-8') ?>"
                             alt="Gallery Image"
                             class="w-full h-auto object-cover" />
-                        <!-- Show the number of likes -->
+                        <!-- Show interaction icons if user is logged -->
+                        <?php if (isset($_SESSION['user'])) { ?>
                         <div class="text-center flex justify-around">
                             <div>
                                 <i class="like-icon bi bi-heart text-red-500"></i>
-                                <span class="text-sm text-gray-600"><?= $likes[$counter]['likes'] ?></span>
+                                <span class="text-sm text-gray-600"><?= $likes[$counter]['likes']; ?></span>
                             </div>
-                            <i id="comments-button" class="comments-icon bi bi-chat text-blue-500"></i>
+                            <i class="comments-icon bi bi-chat text-blue-500"></i>
+                            <?php if ($_SESSION['user'] === $capture['username']) { ?>
                             <i class="delete-icon bi bi-trash3-fill text-red-700"></i>
+                            <?php } ?>
                         </div>
-                    </div>
+                        <?php } ?>
+
                     <?php $counter++; ?>
                 <?php endforeach; ?>
             </div>
