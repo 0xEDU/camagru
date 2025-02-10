@@ -10,8 +10,24 @@ import LoginService from "../services/LoginService";
 import LoginComponent from "../components/LoginComponent";
 import SettingsService from "../services/SettingsService";
 import SettingsComponent from "../components/SettingsComponent";
+import FrontPageService from "../services/FrontPageService";
+import FrontPageComponent from "../components/FrontPageComponent";
 
 const routes = [
+	{
+		path: '/',
+		async initialize(httpClient) {
+			this.components = [];
+
+			const frontPageService = new FrontPageService(httpClient);
+			const frontPageComponent = new FrontPageComponent(frontPageService);
+			this.components.push(frontPageComponent);
+			await frontPageComponent.initialize();
+		},
+		destroy() {
+			this.components.forEach(component => component.destroy());
+		}
+	},
 	{
 		path: '/home',
 		async initialize(httpClient) {

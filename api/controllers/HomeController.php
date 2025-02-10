@@ -16,6 +16,13 @@ class HomeController
 		echo json_encode(['data' => $htmlContent]);
 	}
 
+	public function handleFrontPageRequest()
+	{
+		$htmlContent = $this->loadView('front-page');
+		header ('Content-Type: application/json');
+		echo json_encode(['data' => $htmlContent]);
+	}
+
 	private function loadView($view, $data = [])
 	{
 		extract($data);

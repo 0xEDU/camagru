@@ -12,5 +12,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const menuComponent = new MenuComponent(router, menuService);
 	menuComponent.initialize();
 
-	await router.navigateTo('/home');
+	document.addEventListener('userLogged', async () => {
+		await router.navigateTo('/home');
+	});
+
+	await router.navigateTo('/');
 });

@@ -5,7 +5,7 @@ class Router
 	private $routes = [
 		'GET' => [
 			'#^/home$#' => ['controller' => 'HomeController', 'method' => 'handleRequest'],
-			'#^/$#' => ['controller' => 'HomeController', 'method' => 'handleRequest'],
+			'#^/$#' => ['controller' => 'HomeController', 'method' => 'handleFrontPageRequest'],
 			'#^/images/(\w+)$#' => ['controller' => 'ImagesController', 'method' => 'handleGetByIdRequest'],
 			'#^/images$#' => ['controller' => 'ImagesController', 'method' => 'handleGetRequest'],
 			'#^/superposables$#' => ['controller' => 'ImagesController', 'method' => 'handleGetSuperposablesRequest'],

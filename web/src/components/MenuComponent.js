@@ -31,7 +31,7 @@ class MenuComponent {
 	}
 
 	_handleHomeClick() {
-		this.router.navigateTo('/home');
+		this.router.navigateTo('/');
 	}
 
 	_handleLoginClick() {
