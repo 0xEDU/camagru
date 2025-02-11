@@ -2,10 +2,9 @@
 
 ## What is left to do:
 
-- Password reinitialization
-- Change username (everywhere in db)
-- Change email (also everywhere, but it's used less often)
+- Password reinitialization screen
 - Improve backend validation by adding regex checking to each and every input
+- Improve error messages in front end (settings page)
 
 - Add breakpoints to the UI to make it mobile friendly
 
