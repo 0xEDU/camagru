@@ -25,6 +25,7 @@ class Router
 			'#^/logout$#' => ['controller' => 'LoginController', 'method' => 'handleLogoutRequest'],
 			'#^/gallery/(\w+)/like$#' => ['controller' => 'GalleryController', 'method' => 'handlePostRequest'],
 			'#^/gallery/(\w+)/comments$#' => ['controller' => 'GalleryController', 'method' => 'handleAddCommentRequest'],
+			'#^/login/forgot-password$#' => ['controller' => 'LoginController', 'method' => 'handleForgotPasswordRequest'],
 		],
 		'DELETE' => [
 			'#^/gallery/(\w+)$#' => ['controller' => 'GalleryController', 'method' => 'handleDeleteRequest'],

@@ -88,4 +88,10 @@ class UserRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':username' => $username, ':password' => password_hash($password, PASSWORD_BCRYPT)]);
     }
+
+    public function updateUserToken($id, $token) {
+        $sql = "UPDATE users SET token = :token WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':id' => $id, ':token' => $token]);
+    }
 }

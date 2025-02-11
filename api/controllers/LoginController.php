@@ -85,4 +85,43 @@ class LoginController {
 		http_response_code(200);
 		echo json_encode(['success' => 'User logged out.']);
 	}
+
+	public function handleForgotPasswordRequest() {
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		$email = $data['email'];
+
+		$emailRegex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
+
+		if (!preg_match($emailRegex, $email)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid email.']);
+			return;
+		}
+
+		$email = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
+
+		$user = $this->userRepository->getUserByEmail($email);
+
+		if ($user) {
+			$token = bin2hex(random_bytes(32));
+			$tokenHash = password_hash($token, PASSWORD_DEFAULT);
+
+			$this->userRepository->updateUserToken($user['id'], $tokenHash);
+
+			$to = $user['email'];
+			$subject = "Reset your password";
+			$message = "Click on the link to reset your password: http://localhost:8080/reset-password?token=" . $token;
+			$headers = "From: no-reply@camagru";
+
+			mail($to, $subject, $message, $headers);
+			
+			http_response_code(200);
+			echo json_encode(['success' => 'Email sent.']);
+		} else {
+			http_response_code(404);
+			echo json_encode(['error' => 'User not found.']);
+		}
+		
+	}
 }

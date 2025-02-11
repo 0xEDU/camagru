@@ -1,13 +1,23 @@
 export default class LoginComponent {
 	constructor(loginService) {
+		this.showForgotPassword = false;
+
 		this.loginService = loginService;
 
 		this.loginForm = document.getElementById('login-form');
 		this.formMessage = document.getElementById('form-message');
+		
+		this.forgotPasswordContainer = document.getElementById('forgot-password-container');
+		this.forgotPasswordInput = document.getElementById('forgot-password-email-input');
+		this.forgotPasswordShowButton = document.getElementById('forgot-password-show-button');
+		this.forgotPasswordSendButton = document.getElementById('forgot-password-send-button');
+		this.forgotPasswordMessage = document.getElementById('forgot-password-message');
 	}
 
     async initialize() {
         this.loginForm.addEventListener('submit', this._handleLogin.bind(this));
+		this.forgotPasswordShowButton.addEventListener('click', this._handleShowForgotPassword.bind(this));
+		this.forgotPasswordSendButton.addEventListener('click', this._handleSendForgotPassword.bind(this));
     }
 
     destroy() {
@@ -41,6 +51,31 @@ export default class LoginComponent {
 
 		window.location.reload();
     }
+
+	async _handleShowForgotPassword() {
+		if (this.showForgotPassword) {
+			this.loginForm.style.display = 'none';
+			this.forgotPasswordContainer.classList.remove('hidden');
+			this.showForgotPassword = false;
+		} else {
+			this.loginForm.style.display = '';
+			this.forgotPasswordContainer.classList.add('hidden');
+			this.showForgotPassword = true;
+		}
+	}
+
+	async _handleSendForgotPassword() {
+		const email = this.forgotPasswordInput.value.trim();
+		const response = await this.loginService.postForgotPassword(email);
+		if (response instanceof Error) {
+			this._displayErrorMessage([response.message]);
+			return;
+		}
+
+		this._clearErrorMessage();
+		this.forgotPasswordMessage.innerHTML = 'An email has been sent to your email address. Please check your inbox.';
+	}
+	
 
 	_displaySuccessMessage() {
 		this.formMessage.innerHTML = 'Logged in successfully!';
