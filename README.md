@@ -5,6 +5,7 @@
 - Password reinitialization
 - Change username (everywhere in db)
 - Change email (also everywhere, but it's used less often)
+- Improve backend validation by adding regex checking to each and every input
 
 - Add breakpoints to the UI to make it mobile friendly
 

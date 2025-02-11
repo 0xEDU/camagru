@@ -63,6 +63,7 @@ class LoginController {
 			session_regenerate_id(true);
 
 			$_SESSION['user'] = $user['username'];
+			$_SESSION['email'] = $user['email'];
 
 			http_response_code(200);
 			echo json_encode([

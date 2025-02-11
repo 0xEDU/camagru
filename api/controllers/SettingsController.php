@@ -57,12 +57,23 @@ class SettingsController
         $data = json_decode(file_get_contents('php://input'), true);
         $newusername = $data['new_username'];
 
+		$usernameRegex = '/^[a-zA-Z0-9]+$/';
+
+		if (!preg_match($usernameRegex, $newusername) || !preg_match($usernameRegex, $oldusername)) {
+			http_response_code(400);
+			echo json_encode(['error' => 'Invalid username.']);
+			return;
+		}
+
         $user = $this->userRepository->getUserByUsername($newusername);
         if ($user) {
             http_response_code(409);
             echo json_encode(array("error" => "Username already exists"));
             return;
         }
+
+        $username = htmlspecialchars($newusername, ENT_QUOTES, 'UTF-8');
+        $oldusername = htmlspecialchars($oldusername, ENT_QUOTES, 'UTF-8');
 
         $user = $this->userRepository->getUserByUsername($oldusername);
         if ($user && $_SESSION['user'] == $oldusername) {
