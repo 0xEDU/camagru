@@ -41,4 +41,10 @@ class CommentsRepository {
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':image_id' => $image_id]);
     }
+
+    public function updateUsername($oldusername, $newusername) {
+        $sql = "UPDATE comments SET username = :newusername WHERE username = :oldusername";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':newusername' => $newusername, ':oldusername' => $oldusername]);
+    }
 }

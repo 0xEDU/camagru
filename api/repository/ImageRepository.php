@@ -89,4 +89,10 @@ class ImageRepository {
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute([':image_id' => $image_id]);
 	}
+
+	public function updateUsername($newusername, $oldusername) {
+		$sql = "UPDATE images SET username = :newusername WHERE username = :oldusername";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([':newusername' => $newusername, ':oldusername' => $oldusername]);
+	}
 }

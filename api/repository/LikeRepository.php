@@ -71,4 +71,10 @@ class LikeRepository {
 
 		return $stmt->fetch(PDO::FETCH_ASSOC);
 	}
+
+	public function updateUsername($newusername, $oldusername) {
+		$sql = "UPDATE likes SET username = :newusername WHERE username = :oldusername";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute([':newusername' => $newusername, ':oldusername' => $oldusername]);
+	}
 }

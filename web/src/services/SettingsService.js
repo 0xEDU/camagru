@@ -10,4 +10,8 @@ export default class SettingsService {
     async updateEmailNotifications(username, receiveEmail) {
         return await this.httpClient.put(`/settings/${username}/receive-emails`, { 'receive_email': receiveEmail.toString() });
     }
+
+    async updateUsername(username, newUsername) {
+        return await this.httpClient.put(`/settings/${username}/update-username`, { 'new_username': newUsername });
+    }
 }
