@@ -76,4 +76,10 @@ class UserRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':newusername' => $newusername, ':oldusername' => $oldusername]);
     }
+
+    public function updateEmail($username, $email) {
+        $sql = "UPDATE users SET email = :email WHERE username = :username";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':username' => $username, ':email' => $email]);
+    }
 }

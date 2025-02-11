@@ -90,4 +90,37 @@ class SettingsController
             echo json_encode(array("error" => "User not found"));
         }
     }
+
+    public function handlePutUpdateEmail($username) {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $newemail = $data['new_email'];
+
+        if (!filter_var($newemail, FILTER_VALIDATE_EMAIL)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid email.']);
+            return;
+        }
+
+        $user = $this->userRepository->getUserByEmail($newemail);
+        if ($user) {
+            http_response_code(409);
+            echo json_encode(array("error" => "Email already exists"));
+            return;
+        }
+
+        $email = htmlspecialchars($newemail, ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+
+        $user = $this->userRepository->getUserByUsername($username);
+        if ($user && $_SESSION['user'] == $username) {
+            $this->userRepository->updateEmail($username, $email);
+            $_SESSION['email'] = $email;
+
+            http_response_code(200);
+            echo json_encode(array("message" => "Email updated"));
+        } else {
+            http_response_code(404);
+            echo json_encode(array("error" => "User not found"));
+        }
+    }
 }

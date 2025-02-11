@@ -4,6 +4,7 @@ export default class SettingsComponent {
 
 		this.logoutButton = document.getElementById('logout-button');
         this.updateUsernameButton = document.getElementById('update-username-button');
+        this.updateEmailButton = document.getElementById('update-email-button');
 
         this.updateUsernameInput = document.getElementById('update-username-input');
         this.updateEmailInput = document.getElementById('update-email-input');
@@ -19,6 +20,7 @@ export default class SettingsComponent {
 
         this.emailCheckbox.addEventListener('change', this._handleEmailCheckboxChange.bind(this));
         this.updateUsernameButton.addEventListener('click', this._handleUpdateUsername.bind(this));
+        this.updateEmailButton.addEventListener('click', this._handleUpdateEmail.bind(this));
     }
 
     destroy() {
@@ -34,6 +36,15 @@ export default class SettingsComponent {
         const response = await this.settingsService.updateUsername(username, this.updateUsernameInput.value);
         if (response.message) {
             localStorage.setItem('username', this.updateUsernameInput.value);
+            window.location.reload();
+        }
+    }
+
+    async _handleUpdateEmail() {
+        const username = localStorage.getItem('username');
+        const response = await this.settingsService.updateEmail(username, this.updateEmailInput.value);
+        if (response.message) {
+            localStorage.setItem('email', this.updateEmailInput.value);
             window.location.reload();
         }
     }

@@ -32,6 +32,7 @@ class Router
 		'PUT' => [
 			'#^/settings/(\w+)/receive-emails$#' => ['controller' => 'SettingsController', 'method' => 'handlePutRequest'],
 			'#^/settings/(\w+)/update-username$#' => ['controller' => 'SettingsController', 'method' => 'handlePutUpdateUsername'],
+			'#^/settings/(\w+)/update-email$#' => ['controller' => 'SettingsController', 'method' => 'handlePutUpdateEmail'],
 		]
 	];
 
