@@ -18,4 +18,8 @@ export default class SettingsService {
     async updateEmail(username, newEmail) {
         return await this.httpClient.put(`/settings/${username}/update-email`, { 'new_email': newEmail });
     }
+
+    async updatePassword(username, newPassword) {
+        return await this.httpClient.put(`/settings/${username}/update-password`, { 'new_password': newPassword });
+    }
 }

@@ -123,4 +123,31 @@ class SettingsController
             echo json_encode(array("error" => "User not found"));
         }
     }
+
+    public function handlePutUpdatePassword($username) {
+        $data = json_decode(file_get_contents('php://input'), true);
+        $newpassword = $data['new_password'];
+
+        $passwordRegex = '/^[\w!@#$%^&*()-+=~]+$/';
+
+        if (!preg_match($passwordRegex, $newpassword)) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid password.']);
+            return;
+        }
+
+        $password = htmlspecialchars($newpassword, ENT_QUOTES, 'UTF-8');
+        $username = htmlspecialchars($username, ENT_QUOTES, 'UTF-8');
+
+        $user = $this->userRepository->getUserByUsername($username);
+        if ($user && $_SESSION['user'] == $username) {
+            $this->userRepository->updatePassword($username, $password);
+
+            http_response_code(200);
+            echo json_encode(array("message" => "Password updated"));
+        } else {
+            http_response_code(404);
+            echo json_encode(array("error" => "User not found"));
+        }
+    }
 }

@@ -82,4 +82,10 @@ class UserRepository
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([':username' => $username, ':email' => $email]);
     }
+
+    public function updatePassword($username, $password) {
+        $sql = "UPDATE users SET password = :password WHERE username = :username";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([':username' => $username, ':password' => password_hash($password, PASSWORD_BCRYPT)]);
+    }
 }
