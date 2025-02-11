@@ -15,6 +15,13 @@
                 Update
             </button>
         </div>
+        <span class="mt-2 w-full text-sm font-medium text-black text-left">Password</span>
+        <div class="mb-2 grow">
+			<input type="password" id="update-password-input" class="p-2.5 rounded-lg" placeholder="Enter a new password" required />
+            <button id="update-password-button" class="bg-color-secondary rounded-lg w-auto px-5 py-2.5">
+                Update
+            </button>
+        </div>
         <button id="forgot-password" class="bg-color-secondary rounded-lg px-5 py-2.5 w-full my-2">
             I forgot my password
         </button>
